@@ -130,19 +130,24 @@ class TestTunneldManager(unittest.TestCase):
         self.assertFalse(mgr.has_tunnel)
         self.assertEqual(mgr.get_rsd(), (None, None))
 
-    @patch("app.subprocess.Popen")
-    def test_start_success(self, mock_popen):
-        proc = MagicMock()
-        proc.poll.return_value = None
-        proc.stdout = iter([])
-        mock_popen.return_value = proc
-
+    def test_start_success(self):
         mgr, status_fn = self._make_manager()
-        result = mgr.start()
+        # Mock _is_tunneld_running to return False (no existing process)
+        with patch.object(mgr, "_is_tunneld_running", return_value=False), \
+             patch("app.subprocess.Popen") as mock_popen, \
+             patch.object(mgr, "_SCRIPT_PATH", "/tmp/_test_tunneld.sh"):
+            mock_popen.return_value = MagicMock()
+            result = mgr.start()
 
         self.assertTrue(result)
-        self.assertIs(mgr.process, proc)
+        self.assertTrue(mgr._started)
         mock_popen.assert_called_once()
+        cmd = mock_popen.call_args[0][0]
+        self.assertEqual(cmd[0], "open")
+        try:
+            os.unlink("/tmp/_test_tunneld.sh")
+        except Exception:
+            pass
 
     @patch("app.subprocess.Popen")
     def test_start_already_running(self, mock_popen):
@@ -297,10 +302,10 @@ class TestTunneldManager(unittest.TestCase):
         mgr.process = None
         mgr.stop()
 
-        # Should call subprocess.run with osascript pkill
+        # Should call subprocess.run with sudo pkill
         self.assertTrue(mock_run.called)
         cmd = mock_run.call_args[0][0]
-        self.assertEqual(cmd[0], "osascript")
+        self.assertEqual(cmd[0], "sudo")
 
     @patch("app.subprocess.run", side_effect=Exception("pkill failed"))
     def test_stop_handles_pkill_failure(self, mock_run):
@@ -1181,21 +1186,22 @@ class TestIntegrationFlows(unittest.TestCase):
 
     def test_restart_after_tunnel_death(self):
         """After tunnel dies, start() creates a new process."""
-        # Temporarily unpatch TunneldManager.start for this test
         self.patcher_tunneld.stop()
         try:
-            with patch("app.subprocess.Popen") as mock_popen:
-                proc = MagicMock()
-                proc.poll.return_value = None
-                proc.stdout = iter([])
-                mock_popen.return_value = proc
-
-                mgr = gps_app.TunneldManager(on_status=MagicMock())
-                mgr.process = MagicMock()
-                mgr.process.poll.return_value = 1  # dead
+            mgr = gps_app.TunneldManager(on_status=MagicMock())
+            mgr.process = MagicMock()
+            mgr.process.poll.return_value = 1  # dead
+            with patch.object(mgr, "_is_tunneld_running", return_value=False), \
+                 patch("app.subprocess.Popen") as mock_popen, \
+                 patch.object(mgr, "_SCRIPT_PATH", "/tmp/_test_tunneld2.sh"):
+                mock_popen.return_value = MagicMock()
                 result = mgr.start()
                 self.assertTrue(result)
                 mock_popen.assert_called_once()
+            try:
+                os.unlink("/tmp/_test_tunneld2.sh")
+            except Exception:
+                pass
         finally:
             self.patcher_tunneld.start()
 

@@ -82,19 +82,48 @@ class TunneldManager:
     """Spravuje tunneld daemon bezici na pozadi."""
 
     LOG_PATH = os.path.join(tempfile.gettempdir(), "gps_spoofer_tunneld.log")
+    _SCRIPT_PATH = os.path.join(
+        tempfile.gettempdir(), "gps_spoofer_tunneld.sh"
+    )
 
     def __init__(self, on_status=None):
         self.process = None
         self._rsd_address = None
         self._rsd_port = None
         self._lock = threading.Lock()
+        self._started = False
         self.on_status = on_status or (lambda msg: None)
         self._reader_thread = None
         self._stop_event = threading.Event()
 
+    def _is_tunneld_running(self):
+        """Zjisti zda tunneld uz bezi jako systemovy proces."""
+        try:
+            result = subprocess.run(
+                ["pgrep", "-f", "pymobiledevice3 remote tunneld"],
+                capture_output=True, timeout=5,
+            )
+            return result.returncode == 0
+        except Exception:
+            return False
+
     def start(self):
         if self.has_tunnel:
             self.on_status("tunneld uz bezi")
+            return True
+        if self._started:
+            return True
+
+        self._started = True
+
+        # Pokud tunneld uz bezi (z predchozi session), jen cti log
+        if self._is_tunneld_running() and os.path.exists(self.LOG_PATH):
+            self.on_status("Detekovan bezici tunneld, hledam tunel...")
+            self._stop_event.clear()
+            self._reader_thread = threading.Thread(
+                target=self._read_log_file, daemon=True,
+            )
+            self._reader_thread.start()
             return True
 
         self.on_status("Spoustim tunneld (bude potreba sudo heslo)...")
@@ -106,22 +135,19 @@ class TunneldManager:
             except FileNotFoundError:
                 pass
 
-            # Spustit tunneld na pozadi se sudo, vystup do log souboru
-            bg_cmd = (
-                f"{PYTHON3} -m pymobiledevice3 remote tunneld "
-                f"> {shlex.quote(self.LOG_PATH)} 2>&1 &"
-            )
-            cmd = [
-                "osascript", "-e",
-                f"do shell script {shlex.quote(bg_cmd)} "
-                f"with administrator privileges",
-            ]
-            self.process = subprocess.Popen(
-                cmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-            )
+            # Vytvorit helper skript ktery spusti tunneld
+            with open(self._SCRIPT_PATH, "w") as f:
+                f.write("#!/bin/bash\n")
+                f.write(f'sudo "{PYTHON3}" -m pymobiledevice3 remote tunneld '
+                        f'>> "{self.LOG_PATH}" 2>&1\n')
+            os.chmod(self._SCRIPT_PATH, 0o755)
+
+            # Otevrit Terminal.app s helper skriptem.
+            # Uzivatel uvidi sudo prompt v terminalu (jednou).
+            subprocess.Popen([
+                "open", "-a", "Terminal", self._SCRIPT_PATH,
+            ])
+
             self._stop_event.clear()
             self._reader_thread = threading.Thread(
                 target=self._read_log_file, daemon=True,
@@ -130,6 +156,7 @@ class TunneldManager:
             self.on_status("tunneld spusten, cekam na tunel...")
             return True
         except Exception as e:
+            self._started = False
             self.on_status(f"Chyba pri spusteni tunneld: {e}")
             return False
 
@@ -189,24 +216,22 @@ class TunneldManager:
                     pass
             except Exception:
                 pass
-        kill_cmd = shlex.quote("pkill -f 'pymobiledevice3 remote tunneld'")
+        # Zabit tunneld proces (bezi jako root). Pouzijeme sudo
+        # killall — uzivatel uz zadal heslo v Terminalu, sudo token
+        # muze byt jeste platny. Pokud ne, proste to selze tichy.
         try:
             subprocess.run(
-                ["osascript", "-e",
-                 f"do shell script {kill_cmd} with administrator privileges"],
-                capture_output=True, timeout=10,
+                ["sudo", "-n", "pkill", "-f",
+                 "pymobiledevice3 remote tunneld"],
+                capture_output=True, timeout=5,
             )
         except Exception:
             pass
         self.process = None
+        self._started = False
         with self._lock:
             self._rsd_address = None
             self._rsd_port = None
-        # Uklidit log
-        try:
-            os.remove(self.LOG_PATH)
-        except Exception:
-            pass
 
     def get_rsd(self):
         """Atomicky vrati (rsd_address, rsd_port)."""
