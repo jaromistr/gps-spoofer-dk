@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Claude"
+  xmlns="http://www.topografix.com/GPX/1/1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Budějovická → Praha hl.n. → Kolín (rychlá verze, ~3 min)</name>
+    <desc>Simulace MHD trasy se spojitým pohybem, celková doba ~3 minuty</desc>
+  </metadata>
+  <trk>
+    <name>Budějovická - Kolín rychlá</name>
+    <trkseg>
+
+      <!-- ===== METRO C: Budějovická → Praha hl.n. (~60 sekund) ===== -->
+
+      <!-- Budějovická - drobný pohyb na stanici -->
+      <trkpt lat="50.04455" lon="14.44070"><time>2024-04-16T08:00:00Z</time></trkpt>
+      <trkpt lat="50.04458" lon="14.44073"><time>2024-04-16T08:00:02Z</time></trkpt>
+      <trkpt lat="50.04461" lon="14.44076"><time>2024-04-16T08:00:04Z</time></trkpt>
+
+      <!-- Pohyb směr Pankrác -->
+      <trkpt lat="50.04520" lon="14.44020"><time>2024-04-16T08:00:06Z</time></trkpt>
+      <trkpt lat="50.04600" lon="14.43950"><time>2024-04-16T08:00:08Z</time></trkpt>
+      <trkpt lat="50.04700" lon="14.43870"><time>2024-04-16T08:00:10Z</time></trkpt>
+      <trkpt lat="50.04800" lon="14.43750"><time>2024-04-16T08:00:12Z</time></trkpt>
+
+      <!-- Pankrác - drobný pohyb -->
+      <trkpt lat="50.04850" lon="14.43700"><time>2024-04-16T08:00:14Z</time></trkpt>
+      <trkpt lat="50.04853" lon="14.43703"><time>2024-04-16T08:00:16Z</time></trkpt>
+      <trkpt lat="50.04856" lon="14.43706"><time>2024-04-16T08:00:18Z</time></trkpt>
+
+      <!-- Pohyb směr Vyšehrad -->
+      <trkpt lat="50.04950" lon="14.43600"><time>2024-04-16T08:00:20Z</time></trkpt>
+      <trkpt lat="50.05100" lon="14.43400"><time>2024-04-16T08:00:22Z</time></trkpt>
+      <trkpt lat="50.05300" lon="14.43100"><time>2024-04-16T08:00:24Z</time></trkpt>
+      <trkpt lat="50.05500" lon="14.42800"><time>2024-04-16T08:00:26Z</time></trkpt>
+
+      <!-- Vyšehrad - drobný pohyb -->
+      <trkpt lat="50.05720" lon="14.42580"><time>2024-04-16T08:00:28Z</time></trkpt>
+      <trkpt lat="50.05723" lon="14.42583"><time>2024-04-16T08:00:30Z</time></trkpt>
+      <trkpt lat="50.05726" lon="14.42586"><time>2024-04-16T08:00:32Z</time></trkpt>
+
+      <!-- Pohyb směr I.P. Pavlova -->
+      <trkpt lat="50.05900" lon="14.42700"><time>2024-04-16T08:00:34Z</time></trkpt>
+      <trkpt lat="50.06200" lon="14.42900"><time>2024-04-16T08:00:36Z</time></trkpt>
+      <trkpt lat="50.06500" lon="14.43100"><time>2024-04-16T08:00:38Z</time></trkpt>
+      <trkpt lat="50.06900" lon="14.43200"><time>2024-04-16T08:00:40Z</time></trkpt>
+
+      <!-- I.P. Pavlova - drobný pohyb -->
+      <trkpt lat="50.07500" lon="14.43310"><time>2024-04-16T08:00:42Z</time></trkpt>
+      <trkpt lat="50.07503" lon="14.43313"><time>2024-04-16T08:00:44Z</time></trkpt>
+      <trkpt lat="50.07506" lon="14.43316"><time>2024-04-16T08:00:46Z</time></trkpt>
+
+      <!-- Pohyb směr Muzeum -->
+      <trkpt lat="50.07600" lon="14.43250"><time>2024-04-16T08:00:48Z</time></trkpt>
+      <trkpt lat="50.07700" lon="14.43200"><time>2024-04-16T08:00:50Z</time></trkpt>
+
+      <!-- Muzeum - drobný pohyb -->
+      <trkpt lat="50.07810" lon="14.43140"><time>2024-04-16T08:00:52Z</time></trkpt>
+      <trkpt lat="50.07813" lon="14.43143"><time>2024-04-16T08:00:54Z</time></trkpt>
+      <trkpt lat="50.07816" lon="14.43146"><time>2024-04-16T08:00:56Z</time></trkpt>
+
+      <!-- Pohyb směr Hlavní nádraží -->
+      <trkpt lat="50.07900" lon="14.43250"><time>2024-04-16T08:00:58Z</time></trkpt>
+      <trkpt lat="50.08000" lon="14.43350"><time>2024-04-16T08:01:00Z</time></trkpt>
+      <trkpt lat="50.08150" lon="14.43420"><time>2024-04-16T08:01:02Z</time></trkpt>
+
+      <!-- Praha Hlavní nádraží - přestup, pohyb po nádraží -->
+      <trkpt lat="50.08322" lon="14.43481"><time>2024-04-16T08:01:04Z</time></trkpt>
+      <trkpt lat="50.08330" lon="14.43490"><time>2024-04-16T08:01:06Z</time></trkpt>
+      <trkpt lat="50.08338" lon="14.43498"><time>2024-04-16T08:01:08Z</time></trkpt>
+      <trkpt lat="50.08345" lon="14.43505"><time>2024-04-16T08:01:10Z</time></trkpt>
+      <trkpt lat="50.08340" lon="14.43510"><time>2024-04-16T08:01:12Z</time></trkpt>
+      <trkpt lat="50.08332" lon="14.43502"><time>2024-04-16T08:01:14Z</time></trkpt>
+      <trkpt lat="50.08325" lon="14.43485"><time>2024-04-16T08:01:16Z</time></trkpt>
+
+      <!-- ===== VLAK: Praha hl.n. → Kolín (~120 sekund) ===== -->
+
+      <!-- Rozjezd z Prahy -->
+      <trkpt lat="50.08400" lon="14.43600"><time>2024-04-16T08:01:18Z</time></trkpt>
+      <trkpt lat="50.08600" lon="14.43900"><time>2024-04-16T08:01:20Z</time></trkpt>
+      <trkpt lat="50.08900" lon="14.44300"><time>2024-04-16T08:01:22Z</time></trkpt>
+      <trkpt lat="50.09200" lon="14.44800"><time>2024-04-16T08:01:24Z</time></trkpt>
+      <trkpt lat="50.09600" lon="14.45500"><time>2024-04-16T08:01:26Z</time></trkpt>
+      <trkpt lat="50.10000" lon="14.46200"><time>2024-04-16T08:01:28Z</time></trkpt>
+      <trkpt lat="50.10400" lon="14.46900"><time>2024-04-16T08:01:30Z</time></trkpt>
+
+      <!-- Praha Libeň -->
+      <trkpt lat="50.10800" lon="14.47500"><time>2024-04-16T08:01:32Z</time></trkpt>
+      <trkpt lat="50.10803" lon="14.47503"><time>2024-04-16T08:01:34Z</time></trkpt>
+      <trkpt lat="50.10806" lon="14.47506"><time>2024-04-16T08:01:36Z</time></trkpt>
+
+      <!-- Směr Běchovice -->
+      <trkpt lat="50.10600" lon="14.48500"><time>2024-04-16T08:01:38Z</time></trkpt>
+      <trkpt lat="50.10300" lon="14.50000"><time>2024-04-16T08:01:40Z</time></trkpt>
+      <trkpt lat="50.10000" lon="14.52000"><time>2024-04-16T08:01:42Z</time></trkpt>
+      <trkpt lat="50.09600" lon="14.54000"><time>2024-04-16T08:01:44Z</time></trkpt>
+      <trkpt lat="50.09200" lon="14.55500"><time>2024-04-16T08:01:46Z</time></trkpt>
+      <trkpt lat="50.08900" lon="14.56500"><time>2024-04-16T08:01:48Z</time></trkpt>
+
+      <!-- Praha Běchovice -->
+      <trkpt lat="50.08900" lon="14.57200"><time>2024-04-16T08:01:50Z</time></trkpt>
+      <trkpt lat="50.08903" lon="14.57203"><time>2024-04-16T08:01:52Z</time></trkpt>
+      <trkpt lat="50.08906" lon="14.57206"><time>2024-04-16T08:01:54Z</time></trkpt>
+
+      <!-- Směr Úvaly -->
+      <trkpt lat="50.08700" lon="14.58500"><time>2024-04-16T08:01:56Z</time></trkpt>
+      <trkpt lat="50.08500" lon="14.60500"><time>2024-04-16T08:01:58Z</time></trkpt>
+      <trkpt lat="50.08200" lon="14.63000"><time>2024-04-16T08:02:00Z</time></trkpt>
+      <trkpt lat="50.08000" lon="14.65500"><time>2024-04-16T08:02:02Z</time></trkpt>
+      <trkpt lat="50.07800" lon="14.68000"><time>2024-04-16T08:02:04Z</time></trkpt>
+      <trkpt lat="50.07700" lon="14.70000"><time>2024-04-16T08:02:06Z</time></trkpt>
+
+      <!-- Úvaly -->
+      <trkpt lat="50.07700" lon="14.71500"><time>2024-04-16T08:02:08Z</time></trkpt>
+      <trkpt lat="50.07703" lon="14.71503"><time>2024-04-16T08:02:10Z</time></trkpt>
+      <trkpt lat="50.07706" lon="14.71506"><time>2024-04-16T08:02:12Z</time></trkpt>
+
+      <!-- Směr Cerhenice -->
+      <trkpt lat="50.07500" lon="14.73500"><time>2024-04-16T08:02:14Z</time></trkpt>
+      <trkpt lat="50.07200" lon="14.76000"><time>2024-04-16T08:02:16Z</time></trkpt>
+      <trkpt lat="50.06900" lon="14.78500"><time>2024-04-16T08:02:18Z</time></trkpt>
+      <trkpt lat="50.06500" lon="14.81000"><time>2024-04-16T08:02:20Z</time></trkpt>
+      <trkpt lat="50.06200" lon="14.83000"><time>2024-04-16T08:02:22Z</time></trkpt>
+
+      <!-- Cerhenice -->
+      <trkpt lat="50.05800" lon="14.85000"><time>2024-04-16T08:02:24Z</time></trkpt>
+      <trkpt lat="50.05803" lon="14.85003"><time>2024-04-16T08:02:26Z</time></trkpt>
+      <trkpt lat="50.05806" lon="14.85006"><time>2024-04-16T08:02:28Z</time></trkpt>
+
+      <!-- Směr Kolín -->
+      <trkpt lat="50.05500" lon="14.88000"><time>2024-04-16T08:02:30Z</time></trkpt>
+      <trkpt lat="50.05200" lon="14.92000"><time>2024-04-16T08:02:32Z</time></trkpt>
+      <trkpt lat="50.04800" lon="14.97000"><time>2024-04-16T08:02:34Z</time></trkpt>
+      <trkpt lat="50.04400" lon="15.02000"><time>2024-04-16T08:02:36Z</time></trkpt>
+      <trkpt lat="50.04000" lon="15.07000"><time>2024-04-16T08:02:38Z</time></trkpt>
+      <trkpt lat="50.03600" lon="15.11000"><time>2024-04-16T08:02:40Z</time></trkpt>
+      <trkpt lat="50.03300" lon="15.14500"><time>2024-04-16T08:02:42Z</time></trkpt>
+      <trkpt lat="50.03100" lon="15.17000"><time>2024-04-16T08:02:44Z</time></trkpt>
+      <trkpt lat="50.02950" lon="15.18500"><time>2024-04-16T08:02:46Z</time></trkpt>
+
+      <!-- Kolín Hlavní nádraží - pohyb na místě -->
+      <trkpt lat="50.02836" lon="15.19961"><time>2024-04-16T08:02:48Z</time></trkpt>
+      <trkpt lat="50.02839" lon="15.19964"><time>2024-04-16T08:02:50Z</time></trkpt>
+      <trkpt lat="50.02842" lon="15.19967"><time>2024-04-16T08:02:52Z</time></trkpt>
+      <trkpt lat="50.02845" lon="15.19964"><time>2024-04-16T08:02:54Z</time></trkpt>
+      <trkpt lat="50.02842" lon="15.19961"><time>2024-04-16T08:02:56Z</time></trkpt>
+      <trkpt lat="50.02839" lon="15.19958"><time>2024-04-16T08:02:58Z</time></trkpt>
+      <trkpt lat="50.02836" lon="15.19961"><time>2024-04-16T08:03:00Z</time></trkpt>
+
+    </trkseg>
+  </trk>
+</gpx>

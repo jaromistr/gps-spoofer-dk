@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Claude"
+  xmlns="http://www.topografix.com/GPX/1/1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Budějovická → Praha hl.n. → Kolín</name>
+    <desc>Trasa MHD: metro C + vlak, průměrné rychlosti</desc>
+  </metadata>
+  <trk>
+    <name>Budějovická - Kolín</name>
+    <trkseg>
+
+      <!-- METRO C: Budějovická → Praha hl.n. (~35 km/h průměr) -->
+      <!-- Budějovická -->
+      <trkpt lat="50.04455" lon="14.44070">
+        <ele>270</ele>
+        <time>2024-04-16T08:00:00Z</time>
+      </trkpt>
+      <!-- Pankrác -->
+      <trkpt lat="50.04850" lon="14.43550">
+        <ele>265</ele>
+        <time>2024-04-16T08:02:00Z</time>
+      </trkpt>
+      <!-- Vyšehrad -->
+      <trkpt lat="50.05720" lon="14.42420">
+        <ele>210</ele>
+        <time>2024-04-16T08:04:30Z</time>
+      </trkpt>
+      <!-- Nuselský most / přechod pod řekou -->
+      <trkpt lat="50.06350" lon="14.42100">
+        <ele>200</ele>
+        <time>2024-04-16T08:06:00Z</time>
+      </trkpt>
+      <!-- I.P. Pavlova -->
+      <trkpt lat="50.07500" lon="14.43310">
+        <ele>225</ele>
+        <time>2024-04-16T08:08:00Z</time>
+      </trkpt>
+      <!-- Muzeum -->
+      <trkpt lat="50.07810" lon="14.43140">
+        <ele>230</ele>
+        <time>2024-04-16T08:10:00Z</time>
+      </trkpt>
+      <!-- Hlavní nádraží (přestup na vlak) -->
+      <trkpt lat="50.08320" lon="14.43480">
+        <ele>235</ele>
+        <time>2024-04-16T08:12:00Z</time>
+      </trkpt>
+
+      <!-- ČEKÁNÍ NA VLAK: 8 minut -->
+      <trkpt lat="50.08320" lon="14.43480">
+        <ele>235</ele>
+        <time>2024-04-16T08:20:00Z</time>
+      </trkpt>
+
+      <!-- VLAK: Praha hl.n. → Kolín (~90 km/h průměr) -->
+      <!-- Odjezd z Prahy hl.n. -->
+      <trkpt lat="50.08320" lon="14.43480">
+        <ele>235</ele>
+        <time>2024-04-16T08:20:30Z</time>
+      </trkpt>
+      <!-- Praha Libeň -->
+      <trkpt lat="50.10800" lon="14.47500">
+        <ele>190</ele>
+        <time>2024-04-16T08:27:00Z</time>
+      </trkpt>
+      <!-- Praha Běchovice -->
+      <trkpt lat="50.08900" lon="14.57200">
+        <ele>270</ele>
+        <time>2024-04-16T08:34:00Z</time>
+      </trkpt>
+      <!-- Úvaly -->
+      <trkpt lat="50.07700" lon="14.71500">
+        <ele>280</ele>
+        <time>2024-04-16T08:43:00Z</time>
+      </trkpt>
+      <!-- Cerhenice -->
+      <trkpt lat="50.05800" lon="14.85000">
+        <ele>270</ele>
+        <time>2024-04-16T08:52:00Z</time>
+      </trkpt>
+      <!-- Kolín (cíl) -->
+      <trkpt lat="50.02830" lon="15.19960">
+        <ele>220</ele>
+        <time>2024-04-16T09:10:00Z</time>
+      </trkpt>
+
+    </trkseg>
+  </trk>
+</gpx>

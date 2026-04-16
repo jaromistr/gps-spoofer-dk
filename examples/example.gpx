@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="GPS Spoofer"
+     xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+
+  <metadata>
+    <name>Praha - Karluv most a okoli</name>
+    <desc>Ukazkova trasa prochazkou pres Karluv most v Praze</desc>
+  </metadata>
+
+  <trk>
+    <name>Prochazka Prahou</name>
+    <trkseg>
+      <!-- Staromestske namesti -->
+      <trkpt lat="50.08804" lon="14.42076">
+        <time>2024-01-01T10:00:00Z</time>
+      </trkpt>
+      <!-- Smerem ke Karlovu mostu -->
+      <trkpt lat="50.08680" lon="14.41900">
+        <time>2024-01-01T10:01:00Z</time>
+      </trkpt>
+      <!-- Krizovnicke namesti -->
+      <trkpt lat="50.08620" lon="14.41520">
+        <time>2024-01-01T10:02:00Z</time>
+      </trkpt>
+      <!-- Karluv most - zacatek -->
+      <trkpt lat="50.08630" lon="14.41380">
+        <time>2024-01-01T10:03:00Z</time>
+      </trkpt>
+      <!-- Karluv most - stred -->
+      <trkpt lat="50.08650" lon="14.41130">
+        <time>2024-01-01T10:04:00Z</time>
+      </trkpt>
+      <!-- Karluv most - konec -->
+      <trkpt lat="50.08660" lon="14.40880">
+        <time>2024-01-01T10:05:00Z</time>
+      </trkpt>
+      <!-- Malostranske namesti -->
+      <trkpt lat="50.08820" lon="14.40380">
+        <time>2024-01-01T10:07:00Z</time>
+      </trkpt>
+      <!-- Nerudova ulice -->
+      <trkpt lat="50.08900" lon="14.40100">
+        <time>2024-01-01T10:09:00Z</time>
+      </trkpt>
+      <!-- Prazsky hrad - vchod -->
+      <trkpt lat="50.09080" lon="14.39900">
+        <time>2024-01-01T10:12:00Z</time>
+      </trkpt>
+      <!-- Prazsky hrad -->
+      <trkpt lat="50.09100" lon="14.40050">
+        <time>2024-01-01T10:15:00Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+
+</gpx>

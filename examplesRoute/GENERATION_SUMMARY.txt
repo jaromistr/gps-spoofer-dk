@@ -1,0 +1,77 @@
+GPX ROUTE GENERATION SUMMARY
+============================
+
+Generated: 2024-04-16
+Output Directory: /sessions/pensive-wizardly-bohr/mnt/GPS_spoofing/Routes/
+
+ROUTE 01: Náměstí Míru → Beroun
+File: 01_namesti_miru-beroun_realtime.gpx
+Track Points: 339
+Duration: 08:00:00Z to 09:19:30Z (~79.5 minutes)
+Segments:
+  - Tram 4/22: Náměstí Míru → I.P.Pavlova (4 min) + stop (1.5 min)
+  - Metro C: I.P.Pavlova → Hlavní nádraží (4 min) + stop (2 min)
+  - Transfer & wait (8 min)
+  - Train: Hlavní nádraží → Beroun (50 min) via 8 intermediate stops
+
+ROUTE 02: Dejvická → Příbram
+File: 02_dejvicka-pribram_realtime.gpx
+Track Points: 414
+Duration: 09:19:30Z to 10:55:30Z (~96 minutes)
+Segments:
+  - Metro A: Dejvická → Můstek (10 min) via 4 stations
+  - Transfer A→B at Můstek (3 min)
+  - Metro B: Můstek → Smíchovské nádraží (6 min) via 4 stations
+  - Transfer & wait (8 min)
+  - Train: Smíchovské nádraží → Příbram (60 min) via 6 intermediate stops
+
+ROUTE 03: Žižkov → Kladno
+File: 03_zizkov-kladno_realtime.gpx
+Track Points: 304
+Duration: 10:55:30Z to 12:06:30Z (~71 minutes)
+Segments:
+  - Tram 9/16: Nákladové nádraží Žižkov → Florenc (8 min) via 4 stops
+  - Transfer to metro (3 min)
+  - Metro C: Florenc → Hlavní nádraží (2 min)
+  - Transfer & wait (8 min)
+  - Train: Hlavní nádraží → Kladno (40 min) via 4 intermediate stops
+
+ROUTE 04: Náměstí Míru → Nymburk
+File: 04_namesti_miru-nymburk_realtime.gpx
+Track Points: 277
+Duration: 12:06:30Z to 13:12:00Z (~65.5 minutes)
+Segments:
+  - Tram 11: Náměstí Míru → Muzeum (5 min) + stop (1 min)
+  - Metro C: Muzeum → Hlavní nádraží (2 min) + stop (2 min)
+  - Transfer & wait (8 min)
+  - Train: Hlavní nádraží → Nymburk (50 min) via 5 intermediate stops
+
+TECHNICAL SPECIFICATIONS
+========================
+- Track point interval: 15 seconds
+- Tram average speed: 18 km/h
+- Metro average speed: 35 km/h
+- Train average speed: 80 km/h
+- Station stop simulation: 3-5 GPS points with 5m perturbation
+- All timestamps in UTC (Z format)
+- GPX format version: 1.1
+- Each file includes XML comments marking:
+  - Transport mode transitions
+  - Station names and stop duration
+  - Transfer points
+
+QUALITY METRICS
+===============
+Total track points generated: 1,334
+Average points per minute: ~5.7 (at 15-second intervals)
+All files validated as proper GPX format
+Smooth interpolation between all station coordinates
+Realistic station dwell times and transfer delays
+
+PRAGUE LOCATIONS REFERENCED
+===========================
+Metro Line A: Dejvická, Hradčanská, Malostranská, Staroměstská, Můstek, Náměstí Míru
+Metro Line B: Můstek, Národní třída, Karlovo náměstí, Anděl, Smíchovské nádraží
+Metro Line C: I.P.Pavlova, Muzeum, Hlavní nádraží, Florenc
+Tram routes: 4, 9, 11, 16, 22
+Train stations: Beroun, Příbram, Kladno, Nymburk
