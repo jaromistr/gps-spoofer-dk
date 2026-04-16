@@ -16,10 +16,12 @@ import tempfile
 import threading
 import time
 
+from datetime import datetime
+
 from PyQt6.QtCore import Qt, QTimer, pyqtSignal, QObject
 from PyQt6.QtWidgets import (
     QApplication, QFileDialog, QHBoxLayout, QLabel, QLineEdit,
-    QMainWindow, QPushButton, QVBoxLayout, QWidget,
+    QMainWindow, QPushButton, QTextEdit, QVBoxLayout, QWidget,
 )
 
 
@@ -494,6 +496,25 @@ QPushButton#danger:hover {
 QPushButton#danger:pressed {
     background-color: #f2cdcd;
 }
+QTextEdit#logPanel {
+    background-color: #181825;
+    color: #a6adc8;
+    border: 1px solid #313244;
+    border-radius: 4px;
+    padding: 6px;
+    font-family: "Menlo", monospace;
+    font-size: 11px;
+    selection-background-color: #45475a;
+}
+QPushButton#logToggle {
+    background-color: #313244;
+    color: #a6adc8;
+    font-size: 11px;
+    padding: 4px 12px;
+}
+QPushButton#logToggle:hover {
+    background-color: #45475a;
+}
 """
 
 
@@ -506,8 +527,8 @@ class GPSSpoofApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("GPS Spoofer")
-        self.setMinimumSize(500, 560)
-        self.resize(520, 580)
+        self.setMinimumSize(500, 660)
+        self.resize(520, 740)
 
         # Signal bridge
         self.bridge = StatusBridge()
@@ -651,8 +672,32 @@ class GPSSpoofApp(QMainWindow):
 
         layout.addWidget(ctrl_card)
 
+        # --- Sekce: Log ---
+        log_header = QHBoxLayout()
+        log_header.setContentsMargins(0, 8, 0, 0)
+        self.log_toggle_btn = QPushButton("\u25b6  Zobrazit logy")
+        self.log_toggle_btn.setObjectName("logToggle")
+        self.log_toggle_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.log_toggle_btn.clicked.connect(self._toggle_log_panel)
+        log_header.addWidget(self.log_toggle_btn)
+        log_header.addStretch(1)
+
+        clear_log_btn = QPushButton("Smazat")
+        clear_log_btn.setObjectName("logToggle")
+        clear_log_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        clear_log_btn.clicked.connect(self._clear_log)
+        log_header.addWidget(clear_log_btn)
+        layout.addLayout(log_header)
+
+        self.log_panel = QTextEdit()
+        self.log_panel.setObjectName("logPanel")
+        self.log_panel.setReadOnly(True)
+        self.log_panel.setVisible(False)
+        self.log_panel.setMinimumHeight(120)
+        self.log_panel.setMaximumHeight(200)
+        layout.addWidget(self.log_panel)
+
         # --- Stavovy radek ---
-        layout.addStretch(1)
         self.status_label = QLabel("Spoustim...")
         self.status_label.setObjectName("statusBar")
         layout.addWidget(self.status_label)
@@ -795,8 +840,28 @@ class GPSSpoofApp(QMainWindow):
             target=self.simulator.clear_location, daemon=True,
         ).start()
 
+    def _toggle_log_panel(self):
+        visible = not self.log_panel.isVisible()
+        self.log_panel.setVisible(visible)
+        if visible:
+            self.log_toggle_btn.setText("\u25bc  Skryt logy")
+        else:
+            self.log_toggle_btn.setText("\u25b6  Zobrazit logy")
+
+    def _clear_log(self):
+        self.log_panel.clear()
+
+    def _log(self, msg):
+        """Prida zpravu do log panelu s casovym razitkem."""
+        ts = datetime.now().strftime("%H:%M:%S")
+        self.log_panel.append(f"[{ts}] {msg}")
+        # Auto-scroll dolu
+        sb = self.log_panel.verticalScrollBar()
+        sb.setValue(sb.maximum())
+
     def _update_status(self, msg):
         self.status_label.setText(msg)
+        self._log(msg)
 
     def closeEvent(self, event):
         self._update_status("Ukoncuji...")
