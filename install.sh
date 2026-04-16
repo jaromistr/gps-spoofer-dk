@@ -2,7 +2,9 @@
 # ============================================================================
 # GPS Spoofer - Instalacni skript
 # ============================================================================
-# Tento skript nainstaluje vsechny potrebne zavislosti pro GPS Spoofer.
+# Vytvori virtualni prostredi (venv) a nainstaluje potrebne zavislosti.
+# Pouzitim venv se vyhneme PEP 668 "externally-managed-environment" chybe
+# na modernich Homebrew Pythonech (3.12+).
 # Spusteni:  chmod +x install.sh && ./install.sh
 # ============================================================================
 
@@ -15,21 +17,22 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 BOLD='\033[1m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# Funkce pro vypis
 info()    { echo -e "${BLUE}[INFO]${NC}  $1"; }
 success() { echo -e "${GREEN}[OK]${NC}    $1"; }
 warn()    { echo -e "${YELLOW}[WARN]${NC}  $1"; }
 error()   { echo -e "${RED}[FAIL]${NC}  $1"; }
 step()    { echo -e "\n${CYAN}${BOLD}>> $1${NC}"; }
 
-# Banner
 echo -e "${BOLD}"
 echo "  ╔═══════════════════════════════════════╗"
 echo "  ║         GPS Spoofer - Instalace       ║"
 echo "  ╚═══════════════════════════════════════╝"
 echo -e "${NC}"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VENV_DIR="$SCRIPT_DIR/venv"
 
 # ---- 1. Kontrola macOS ----
 step "Kontrola operacniho systemu"
@@ -45,7 +48,6 @@ info "macOS verze: $MACOS_VERSION"
 MAJOR_VERSION=$(echo "$MACOS_VERSION" | cut -d. -f1)
 if [[ "$MAJOR_VERSION" -lt 12 ]]; then
     warn "Doporucena verze macOS je 12 (Monterey) nebo novejsi."
-    warn "Starsi verze nemusí byt plne podporovany."
 fi
 
 ARCH=$(uname -m)
@@ -69,113 +71,108 @@ done
 if [[ -z "$PYTHON3" ]]; then
     error "Python 3 nebyl nalezen!"
     echo ""
-    echo -e "  Nainstalujte Python 3 jednim z techto zpusobu:"
+    echo -e "  Nainstalujte Python 3:"
     echo -e "  ${CYAN}1.${NC} Stazenim z ${BOLD}https://www.python.org/downloads/${NC}"
     echo -e "  ${CYAN}2.${NC} Pres Homebrew: ${BOLD}brew install python3${NC}"
-    echo ""
     exit 1
 fi
 
 PY_VERSION=$("$PYTHON3" --version 2>&1)
 success "Python nalezen: $PYTHON3 ($PY_VERSION)"
 
-# ---- 3. Kontrola/instalace Homebrew ----
+# ---- 3. Kontrola/instalace Homebrew (volitelne) ----
 step "Kontrola Homebrew"
 
 if command -v brew &>/dev/null; then
     BREW_VERSION=$(brew --version | head -1)
     success "Homebrew nalezen: $BREW_VERSION"
 else
-    warn "Homebrew neni nainstalovany."
-    info "Instaluji Homebrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-    # Pridej do PATH pro Apple Silicon
-    if [[ "$ARCH" == "arm64" ]]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-    fi
-
-    if command -v brew &>/dev/null; then
-        success "Homebrew uspesne nainstalovany"
-    else
-        error "Instalace Homebrew selhala"
-        exit 1
-    fi
+    info "Homebrew neni nainstalovany (neni nutne pokud mas Python)."
 fi
 
-# ---- 4. Instalace PyQt6 a pymobiledevice3 ----
+# ---- 4. Vytvoreni venv ----
+step "Vytvoreni virtualniho prostredi"
+
+if [[ -d "$VENV_DIR" ]]; then
+    info "Venv uz existuje v $VENV_DIR"
+    info "Pouzijem existujici..."
+else
+    info "Vytvarim venv v $VENV_DIR ..."
+    "$PYTHON3" -m venv "$VENV_DIR"
+    success "Venv vytvoren"
+fi
+
+VENV_PYTHON="$VENV_DIR/bin/python3"
+VENV_PIP="$VENV_DIR/bin/pip"
+
+if [[ ! -x "$VENV_PYTHON" ]]; then
+    error "Venv python neni funkcni: $VENV_PYTHON"
+    exit 1
+fi
+
+VENV_PY_VERSION=$("$VENV_PYTHON" --version 2>&1)
+success "Venv Python: $VENV_PY_VERSION"
+
+# ---- 5. Instalace balicku do venv ----
 step "Instalace Python balicku (PyQt6, pymobiledevice3)"
 
-PIP3="${PYTHON3} -m pip"
+info "Upgrade pip..."
+"$VENV_PIP" install --upgrade pip 2>&1 | tail -1 || true
 
 # PyQt6
-if $PIP3 show PyQt6 &>/dev/null; then
-    QT_VERSION=$($PIP3 show PyQt6 2>/dev/null | grep "^Version:" | awk '{print $2}')
+if "$VENV_PIP" show PyQt6 &>/dev/null; then
+    QT_VERSION=$("$VENV_PIP" show PyQt6 2>/dev/null | grep "^Version:" | awk '{print $2}')
     success "PyQt6 uz je nainstalovany (verze $QT_VERSION)"
 else
     info "Instaluji PyQt6 (GUI knihovna)..."
-    $PIP3 install PyQt6 2>&1 | tail -3
+    "$VENV_PIP" install PyQt6
 fi
 
-if ! $PIP3 show PyQt6 &>/dev/null; then
+if ! "$VENV_PIP" show PyQt6 &>/dev/null; then
     error "Instalace PyQt6 selhala!"
-    echo ""
-    echo -e "  Zkuste manualni instalaci:"
-    echo -e "  ${BOLD}$PIP3 install PyQt6${NC}"
-    echo ""
     exit 1
 fi
 success "PyQt6 pripraven"
 
 # pymobiledevice3
-if $PIP3 show pymobiledevice3 &>/dev/null; then
-    CURRENT_VERSION=$($PIP3 show pymobiledevice3 2>/dev/null | grep "^Version:" | awk '{print $2}')
+if "$VENV_PIP" show pymobiledevice3 &>/dev/null; then
+    CURRENT_VERSION=$("$VENV_PIP" show pymobiledevice3 2>/dev/null | grep "^Version:" | awk '{print $2}')
     success "pymobiledevice3 uz je nainstalovany (verze $CURRENT_VERSION)"
     info "Aktualizuji na nejnovejsi verzi..."
-    $PIP3 install --upgrade pymobiledevice3 2>&1 | tail -1
+    "$VENV_PIP" install --upgrade pymobiledevice3 2>&1 | tail -1 || true
 else
     info "Instaluji pymobiledevice3..."
-    $PIP3 install pymobiledevice3 2>&1 | tail -3
+    "$VENV_PIP" install pymobiledevice3
 fi
 
-# Overeni instalace
-if $PIP3 show pymobiledevice3 &>/dev/null; then
-    INSTALLED_VERSION=$($PIP3 show pymobiledevice3 2>/dev/null | grep "^Version:" | awk '{print $2}')
-    success "pymobiledevice3 verze $INSTALLED_VERSION nainstalovany"
-else
+if ! "$VENV_PIP" show pymobiledevice3 &>/dev/null; then
     error "Instalace pymobiledevice3 selhala!"
-    echo ""
-    echo -e "  Zkuste manualni instalaci:"
-    echo -e "  ${BOLD}$PIP3 install pymobiledevice3${NC}"
-    echo ""
     exit 1
 fi
+INSTALLED_VERSION=$("$VENV_PIP" show pymobiledevice3 2>/dev/null | grep "^Version:" | awk '{print $2}')
+success "pymobiledevice3 verze $INSTALLED_VERSION nainstalovany"
 
-# Overeni ze CLI je dostupne
-PMD3_PATH=""
-for p in /opt/homebrew/bin/pymobiledevice3 /usr/local/bin/pymobiledevice3 "$HOME/.local/bin/pymobiledevice3"; do
-    if [[ -x "$p" ]]; then
-        PMD3_PATH="$p"
-        break
-    fi
-done
+# ---- 6. Vytvoreni launcher skriptu ----
+step "Vytvoreni launcher skriptu"
 
-if [[ -n "$PMD3_PATH" ]]; then
-    success "pymobiledevice3 CLI: $PMD3_PATH"
-else
-    warn "pymobiledevice3 CLI neni v PATH."
-    warn "Mozna bude potreba pridat ~/.local/bin do PATH:"
-    echo -e "  ${BOLD}export PATH=\"\$HOME/.local/bin:\$PATH\"${NC}"
-fi
+LAUNCHER="$SCRIPT_DIR/run.sh"
+cat > "$LAUNCHER" <<EOF
+#!/bin/bash
+# Auto-generated launcher for GPS Spoofer
+SCRIPT_DIR="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")" && pwd)"
+exec "\$SCRIPT_DIR/venv/bin/python3" "\$SCRIPT_DIR/app.py" "\$@"
+EOF
+chmod +x "$LAUNCHER"
+success "Launcher vytvoren: $LAUNCHER"
 
-# ---- 5. Zaverecne info ----
+# ---- 7. Zaverecne info ----
 step "Instalace dokoncena!"
 
 echo ""
 echo -e "${GREEN}${BOLD}  Vse je pripraveno!${NC}"
 echo ""
 echo -e "  ${BOLD}Spusteni aplikace:${NC}"
-echo -e "  ${CYAN}$PYTHON3 app.py${NC}"
+echo -e "  ${CYAN}./run.sh${NC}"
 echo ""
 echo -e "  ${BOLD}Pred spustenim:${NC}"
 echo -e "  1. Pripojte iPhone pres USB kabel"
@@ -183,5 +180,5 @@ echo -e "  2. Na iPhonu povolte Developer Mode (Nastaveni > Soukromi a zabezpece
 echo -e "  3. Duverte pocitaci na iPhonu kdyz se zobrazi dialog"
 echo ""
 echo -e "  ${YELLOW}Poznamka:${NC} Aplikace vyzaduje sudo pro tunneld daemon."
-echo -e "  Budete pozadani o heslo pri spusteni."
+echo -e "  Otevre Terminal.app kde zadate heslo (jednou)."
 echo ""

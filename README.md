@@ -28,13 +28,14 @@ chmod +x install.sh
 ./install.sh
 
 # 3. Spust aplikaci
-python3 app.py
+./run.sh
 ```
 
 Instalacni skript automaticky:
 - Zkontroluje macOS a Python 3
-- Nainstaluje Homebrew (pokud chybi)
-- Nainstaluje pymobiledevice3
+- Vytvori virtualni prostredi (venv) v `./venv/`
+- Nainstaluje PyQt6 a pymobiledevice3 do venv
+- Vytvori `run.sh` launcher
 
 ## Pouziti
 
@@ -47,7 +48,7 @@ Instalacni skript automaticky:
 ### 2. Spust aplikaci
 
 ```bash
-python3 app.py
+./run.sh
 ```
 
 Aplikace automaticky:

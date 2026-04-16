@@ -30,7 +30,14 @@ from PyQt6.QtWidgets import (
 # ---------------------------------------------------------------------------
 
 def find_python3():
-    """Najde cestu k python3 binarce."""
+    """Najde cestu k python3 binarce.
+
+    Preferuje aktualne bezici interpreter (sys.executable) — pokud apka
+    bezi z venv, pouzijeme ten. Jinak zkusime standardni cesty.
+    """
+    # Pokud bezi venv nebo jiny specificky python, pouzij ho
+    if sys.executable and os.path.isfile(sys.executable):
+        return sys.executable
     for path in [
         "/opt/homebrew/bin/python3",
         "/usr/local/bin/python3",
@@ -42,7 +49,17 @@ def find_python3():
 
 
 def find_pymobiledevice3():
-    """Najde cestu k pymobiledevice3 CLI."""
+    """Najde cestu k pymobiledevice3 CLI.
+
+    Preferuje CLI ze stejneho prostredi jako bezici Python (napr. venv).
+    """
+    # Venv: pymobiledevice3 bude v ../bin/ vedle python3
+    if sys.executable:
+        venv_candidate = os.path.join(
+            os.path.dirname(sys.executable), "pymobiledevice3"
+        )
+        if os.path.isfile(venv_candidate):
+            return venv_candidate
     for path in [
         "/opt/homebrew/bin/pymobiledevice3",
         "/usr/local/bin/pymobiledevice3",

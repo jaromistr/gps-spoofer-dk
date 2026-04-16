@@ -23,3 +23,6 @@ build/
 venv/
 .venv/
 env/
+
+# Auto-generated launcher
+run.sh
