@@ -12,7 +12,9 @@ import re
 import shlex
 import subprocess
 import sys
+import tempfile
 import threading
+import time
 
 from PyQt6.QtCore import Qt, QTimer, pyqtSignal, QObject
 from PyQt6.QtWidgets import (
@@ -79,6 +81,8 @@ class StatusBridge(QObject):
 class TunneldManager:
     """Spravuje tunneld daemon bezici na pozadi."""
 
+    LOG_PATH = os.path.join(tempfile.gettempdir(), "gps_spoofer_tunneld.log")
+
     def __init__(self, on_status=None):
         self.process = None
         self._rsd_address = None
@@ -89,19 +93,28 @@ class TunneldManager:
         self._stop_event = threading.Event()
 
     def start(self):
-        if self.process and self.process.poll() is None:
+        if self.has_tunnel:
             self.on_status("tunneld uz bezi")
             return True
 
         self.on_status("Spoustim tunneld (bude potreba sudo heslo)...")
 
         try:
-            shell_cmd = shlex.quote(
-                f"{PYTHON3} -m pymobiledevice3 remote tunneld 2>&1"
+            # Vymazat stary log
+            try:
+                os.remove(self.LOG_PATH)
+            except FileNotFoundError:
+                pass
+
+            # Spustit tunneld na pozadi se sudo, vystup do log souboru
+            bg_cmd = (
+                f"{PYTHON3} -m pymobiledevice3 remote tunneld "
+                f"> {shlex.quote(self.LOG_PATH)} 2>&1 &"
             )
             cmd = [
                 "osascript", "-e",
-                f"do shell script {shell_cmd} with administrator privileges",
+                f"do shell script {shlex.quote(bg_cmd)} "
+                f"with administrator privileges",
             ]
             self.process = subprocess.Popen(
                 cmd,
@@ -111,7 +124,7 @@ class TunneldManager:
             )
             self._stop_event.clear()
             self._reader_thread = threading.Thread(
-                target=self._read_output, daemon=True,
+                target=self._read_log_file, daemon=True,
             )
             self._reader_thread.start()
             self.on_status("tunneld spusten, cekam na tunel...")
@@ -120,23 +133,48 @@ class TunneldManager:
             self.on_status(f"Chyba pri spusteni tunneld: {e}")
             return False
 
-    def _read_output(self):
+    def _read_log_file(self):
+        """Cte log soubor tunneld a hleda RSD adresu/port."""
         rsd_pattern = re.compile(r"Created tunnel --rsd\s+(\S+)\s+(\d+)")
-        try:
-            for line in self.process.stdout:
-                if self._stop_event.is_set():
-                    break
-                line = line.strip()
-                match = rsd_pattern.search(line)
-                if match:
-                    addr = match.group(1)
-                    port = match.group(2)
-                    with self._lock:
-                        self._rsd_address = addr
-                        self._rsd_port = port
-                    self.on_status(f"Tunel pripraven: {addr}:{port}")
-        except Exception as e:
-            self.on_status(f"Chyba cteni tunneld vystupu: {e}")
+        read_pos = 0
+        # Cekej az se log soubor objevi (max 30s)
+        for _ in range(60):
+            if self._stop_event.is_set():
+                return
+            if os.path.exists(self.LOG_PATH):
+                break
+            time.sleep(0.5)
+        else:
+            self.on_status("Chyba: tunneld log se nevytvoril")
+            return
+
+        # Cti log dokud se nenajde RSD nebo se nezastavi
+        for _ in range(120):  # max 60s (120 * 0.5s)
+            if self._stop_event.is_set():
+                return
+            try:
+                with open(self.LOG_PATH, "r") as f:
+                    f.seek(read_pos)
+                    new_data = f.read()
+                    read_pos = f.tell()
+                if new_data:
+                    for line in new_data.splitlines():
+                        match = rsd_pattern.search(line)
+                        if match:
+                            addr = match.group(1)
+                            port = match.group(2)
+                            with self._lock:
+                                self._rsd_address = addr
+                                self._rsd_port = port
+                            self.on_status(
+                                f"Tunel pripraven: {addr}:{port}"
+                            )
+                            return
+            except Exception:
+                pass
+            time.sleep(0.5)
+
+        self.on_status("Chyba: tunneld nenasel tunel do 60s")
 
     def stop(self):
         self._stop_event.set()
@@ -164,6 +202,11 @@ class TunneldManager:
         with self._lock:
             self._rsd_address = None
             self._rsd_port = None
+        # Uklidit log
+        try:
+            os.remove(self.LOG_PATH)
+        except Exception:
+            pass
 
     def get_rsd(self):
         """Atomicky vrati (rsd_address, rsd_port)."""

@@ -146,9 +146,11 @@ class TestTunneldManager(unittest.TestCase):
 
     @patch("app.subprocess.Popen")
     def test_start_already_running(self, mock_popen):
+        """If tunnel already has RSD, start() returns True immediately."""
         mgr, status_fn = self._make_manager()
-        mgr.process = MagicMock()
-        mgr.process.poll.return_value = None  # alive
+        with mgr._lock:
+            mgr._rsd_address = "10.0.0.1"
+            mgr._rsd_port = "12345"
 
         result = mgr.start()
         self.assertTrue(result)
@@ -163,88 +165,97 @@ class TestTunneldManager(unittest.TestCase):
         self.assertFalse(result)
         self.assertIn("Chyba", status_fn.call_args[0][0])
 
-    def test_read_output_parses_ipv4_rsd(self):
+    def test_read_log_parses_ipv4_rsd(self):
         mgr, status_fn = self._make_manager()
-        mgr.process = MagicMock()
-        mgr.process.stdout = iter([
-            "Some log line\n",
-            "Created tunnel --rsd 10.0.0.1 12345\n",
-        ])
-        mgr._stop_event = threading.Event()
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
+                                         delete=False) as f:
+            f.write("Some log line\n")
+            f.write("Created tunnel --rsd 10.0.0.1 12345\n")
+            mgr.LOG_PATH = f.name
+        try:
+            mgr._read_log_file()
+            self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "12345"))
+        finally:
+            os.unlink(f.name)
 
-        mgr._read_output()
-        self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "12345"))
-
-    def test_read_output_parses_ipv6_rsd(self):
+    def test_read_log_parses_ipv6_rsd(self):
         mgr, status_fn = self._make_manager()
-        mgr.process = MagicMock()
-        mgr.process.stdout = iter([
-            "Created tunnel --rsd fd71:abcd:1234::1 54321\n",
-        ])
-        mgr._stop_event = threading.Event()
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
+                                         delete=False) as f:
+            f.write("Created tunnel --rsd fd71:abcd:1234::1 54321\n")
+            mgr.LOG_PATH = f.name
+        try:
+            mgr._read_log_file()
+            self.assertEqual(mgr.get_rsd(), ("fd71:abcd:1234::1", "54321"))
+        finally:
+            os.unlink(f.name)
 
-        mgr._read_output()
-        self.assertEqual(mgr.get_rsd(), ("fd71:abcd:1234::1", "54321"))
-
-    def test_read_output_parses_rsd_with_extra_text(self):
+    def test_read_log_parses_rsd_with_extra_text(self):
         mgr, status_fn = self._make_manager()
-        mgr.process = MagicMock()
-        mgr.process.stdout = iter([
-            "INFO: Created tunnel --rsd 192.168.1.1 8080 for device XYZ\n",
-        ])
-        mgr._stop_event = threading.Event()
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
+                                         delete=False) as f:
+            f.write("INFO: Created tunnel --rsd 192.168.1.1 8080 for XYZ\n")
+            mgr.LOG_PATH = f.name
+        try:
+            mgr._read_log_file()
+            self.assertEqual(mgr.get_rsd(), ("192.168.1.1", "8080"))
+        finally:
+            os.unlink(f.name)
 
-        mgr._read_output()
-        self.assertEqual(mgr.get_rsd(), ("192.168.1.1", "8080"))
-
-    def test_read_output_ignores_unrelated_lines(self):
+    def test_read_log_ignores_unrelated_lines(self):
         mgr, _ = self._make_manager()
-        mgr.process = MagicMock()
-        mgr.process.stdout = iter([
-            "Starting tunneld...\n",
-            "Waiting for devices...\n",
-        ])
-        mgr._stop_event = threading.Event()
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
+                                         delete=False) as f:
+            f.write("Starting tunneld...\nWaiting for devices...\n")
+            mgr.LOG_PATH = f.name
+        try:
+            # Set stop event after a short time so it doesn't loop 60s
+            def stop_soon():
+                time.sleep(0.3)
+                mgr._stop_event.set()
+            threading.Thread(target=stop_soon, daemon=True).start()
+            mgr._read_log_file()
+            self.assertEqual(mgr.get_rsd(), (None, None))
+        finally:
+            os.unlink(f.name)
 
-        mgr._read_output()
-        self.assertEqual(mgr.get_rsd(), (None, None))
-
-    def test_read_output_calls_on_status_on_match(self):
+    def test_read_log_calls_on_status_on_match(self):
         mgr, status_fn = self._make_manager()
-        mgr.process = MagicMock()
-        mgr.process.stdout = iter([
-            "Created tunnel --rsd 10.0.0.1 9999\n",
-        ])
-        mgr._stop_event = threading.Event()
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
+                                         delete=False) as f:
+            f.write("Created tunnel --rsd 10.0.0.1 9999\n")
+            mgr.LOG_PATH = f.name
+        try:
+            mgr._read_log_file()
+            status_fn.assert_called_with("Tunel pripraven: 10.0.0.1:9999")
+        finally:
+            os.unlink(f.name)
 
-        mgr._read_output()
-        status_fn.assert_called_with("Tunel pripraven: 10.0.0.1:9999")
-
-    def test_read_output_stops_on_stop_event(self):
+    def test_read_log_stops_on_stop_event(self):
         mgr, _ = self._make_manager()
-        mgr.process = MagicMock()
-        mgr._stop_event = threading.Event()
         mgr._stop_event.set()
-        # Even with matching lines, should stop immediately
-        mgr.process.stdout = iter([
-            "Created tunnel --rsd 10.0.0.1 9999\n",
-        ])
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
+                                         delete=False) as f:
+            f.write("Created tunnel --rsd 10.0.0.1 9999\n")
+            mgr.LOG_PATH = f.name
+        try:
+            mgr._read_log_file()
+            self.assertEqual(mgr.get_rsd(), (None, None))
+        finally:
+            os.unlink(f.name)
 
-        mgr._read_output()
-        self.assertEqual(mgr.get_rsd(), (None, None))
-
-    def test_read_output_exception_reports_status(self):
-        """After fix: exceptions are reported, not silently swallowed."""
+    def test_read_log_missing_file_reports_error(self):
+        """If log file never appears, reports error."""
         mgr, status_fn = self._make_manager()
-        mgr.process = MagicMock()
-        mgr.process.stdout = MagicMock()
-        mgr.process.stdout.__iter__ = Mock(side_effect=RuntimeError("pipe broken"))
-        mgr._stop_event = threading.Event()
-
-        mgr._read_output()
-        self.assertTrue(
-            any("Chyba" in str(c) for c in status_fn.call_args_list)
-        )
+        mgr.LOG_PATH = "/tmp/nonexistent_tunneld_test.log"
+        # Set stop event quickly so test doesn't wait 30s
+        def stop_soon():
+            time.sleep(0.3)
+            mgr._stop_event.set()
+        threading.Thread(target=stop_soon, daemon=True).start()
+        mgr._read_log_file()
+        # Should not have found RSD
+        self.assertEqual(mgr.get_rsd(), (None, None))
 
     @patch("app.subprocess.run")
     def test_stop_terminates_process(self, mock_run):
@@ -1298,22 +1309,28 @@ class TestEdgeCases(unittest.TestCase):
     def test_rsd_port_out_of_range(self):
         """Port 99999 is extracted by parser (validation elsewhere)."""
         mgr = gps_app.TunneldManager()
-        mgr.process = MagicMock()
-        mgr.process.stdout = iter([
-            "Created tunnel --rsd 10.0.0.1 99999\n",
-        ])
-        mgr._stop_event = threading.Event()
-        mgr._read_output()
-        self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "99999"))
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
+                                         delete=False) as f:
+            f.write("Created tunnel --rsd 10.0.0.1 99999\n")
+            mgr.LOG_PATH = f.name
+        try:
+            mgr._read_log_file()
+            self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "99999"))
+        finally:
+            os.unlink(f.name)
 
     def test_rsd_port_zero(self):
         """Port 0 is extracted."""
         mgr = gps_app.TunneldManager()
-        mgr.process = MagicMock()
-        mgr.process.stdout = iter(["Created tunnel --rsd 10.0.0.1 0\n"])
-        mgr._stop_event = threading.Event()
-        mgr._read_output()
-        self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "0"))
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
+                                         delete=False) as f:
+            f.write("Created tunnel --rsd 10.0.0.1 0\n")
+            mgr.LOG_PATH = f.name
+        try:
+            mgr._read_log_file()
+            self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "0"))
+        finally:
+            os.unlink(f.name)
 
     def test_set_location_many_decimals(self):
         """Many decimal places pass validation."""
@@ -1350,13 +1367,21 @@ class TestEdgeCases(unittest.TestCase):
         self.assertIs(self.window.simulator, sim_ref)
 
     def test_empty_tunneld_output(self):
-        """Tunneld producing no output leaves RSD as None."""
+        """Tunneld producing empty log leaves RSD as None."""
         mgr = gps_app.TunneldManager()
-        mgr.process = MagicMock()
-        mgr.process.stdout = iter([])
-        mgr._stop_event = threading.Event()
-        mgr._read_output()
-        self.assertEqual(mgr.get_rsd(), (None, None))
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
+                                         delete=False) as f:
+            f.write("")  # empty
+            mgr.LOG_PATH = f.name
+        try:
+            def stop_soon():
+                time.sleep(0.3)
+                mgr._stop_event.set()
+            threading.Thread(target=stop_soon, daemon=True).start()
+            mgr._read_log_file()
+            self.assertEqual(mgr.get_rsd(), (None, None))
+        finally:
+            os.unlink(f.name)
 
 
 # ===========================================================================
