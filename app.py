@@ -6,6 +6,7 @@ Pouziva pymobiledevice3 pro komunikaci s pripojenym iPhonem pres USB.
 Vyzaduje macOS, Python 3, PyQt6 a pymobiledevice3.
 """
 
+import json
 import math
 import os
 import re
@@ -15,6 +16,8 @@ import sys
 import tempfile
 import threading
 import time
+import urllib.error
+import urllib.request
 
 from datetime import datetime
 
@@ -135,15 +138,25 @@ class TunneldManager:
 
         self._started = True
 
-        # Pokud tunneld uz bezi (z predchozi session), jen cti log
-        if self._is_tunneld_running() and os.path.exists(self.LOG_PATH):
-            self.on_status("Detekovan bezici tunneld, hledam tunel...")
-            self._stop_event.clear()
-            self._reader_thread = threading.Thread(
-                target=self._read_log_file, daemon=True,
-            )
-            self._reader_thread.start()
-            return True
+        # Pokud tunneld uz bezi A API vraci aktivni tunely, pouzijeme je.
+        # Pokud API nic nevraci (zborene tunely), budeme spoustet fresh.
+        if self._is_tunneld_running():
+            api_addr, api_port = self._query_tunneld_api()
+            if api_addr and api_port:
+                self.on_status(
+                    "Detekovan bezici tunneld s aktivnim tunelem"
+                )
+                self._stop_event.clear()
+                self._reader_thread = threading.Thread(
+                    target=self._read_log_file, daemon=True,
+                )
+                self._reader_thread.start()
+                return True
+            else:
+                self.on_status(
+                    "tunneld bezi ale bez aktivniho tunelu — "
+                    "zkusim novy start"
+                )
 
         self.on_status("Spoustim tunneld (bude potreba sudo heslo)...")
 
@@ -180,11 +193,42 @@ class TunneldManager:
             return False
 
     _RSD_PATTERN = re.compile(r"Created tunnel --rsd\s+(\S+)\s+(\d+)")
+    _TUNNELD_API_URL = "http://127.0.0.1:49151/"
+
+    def _query_tunneld_api(self):
+        """Zepta se tunneld HTTP API na aktualni aktivni tunely.
+
+        Toto je autoritativni zdroj (na rozdil od logu, ktery obsahuje
+        i historicke/zborene tunely). Vraci (addr, port) nebo (None, None).
+        """
+        try:
+            req = urllib.request.Request(self._TUNNELD_API_URL)
+            with urllib.request.urlopen(req, timeout=3) as response:
+                data = json.loads(response.read().decode("utf-8"))
+        except (urllib.error.URLError, OSError, ValueError):
+            return None, None
+
+        if not isinstance(data, dict) or not data:
+            return None, None
+
+        # data format: {udid: [{"tunnel-address": "...", "tunnel-port": N, ...}]}
+        for udid, tunnels in data.items():
+            if not isinstance(tunnels, list):
+                continue
+            for t in tunnels:
+                if not isinstance(t, dict):
+                    continue
+                addr = t.get("tunnel-address") or t.get("address")
+                port = t.get("tunnel-port") or t.get("port")
+                if addr and port is not None:
+                    return str(addr), str(port)
+        return None, None
 
     def _scan_log_for_latest_rsd(self):
         """Precte cely log a vrati POSLEDNI RSD match (nejnovejsi tunel).
 
-        Vraci (addr, port) nebo (None, None).
+        Fallback pokud tunneld API neodpovida. Log muze obsahovat
+        stary zbore ny tunel — proto je API preferovane.
         """
         if not os.path.exists(self.LOG_PATH):
             return None, None
@@ -196,16 +240,24 @@ class TunneldManager:
         matches = self._RSD_PATTERN.findall(content)
         if not matches:
             return None, None
-        # Posledni match = nejnovejsi tunel
         return matches[-1]
 
-    def refresh_rsd(self):
-        """Znovu nacte posledni RSD z logu. Vola se pred kazdym prikazem
-        aby se pouzil aktualni tunel (stary muze byt zboren).
+    def _get_current_rsd(self):
+        """Vrati aktualni RSD: prvne zkusi API, pak fallback na log."""
+        addr, port = self._query_tunneld_api()
+        if addr and port:
+            return addr, port
+        return self._scan_log_for_latest_rsd()
 
-        Vraci True pokud se RSD zmenila.
+    def refresh_rsd(self):
+        """Znovu nacte aktualni RSD (prvne z tunneld API, pak z logu).
+
+        Vola se pred kazdym prikazem aby se pouzil aktualni tunel.
+        API je autoritativni — log muze obsahovat stary zborene tunely.
+
+        Vraci True pokud se podarilo nacist RSD.
         """
-        addr, port = self._scan_log_for_latest_rsd()
+        addr, port = self._get_current_rsd()
         if not addr or not port:
             return False
         with self._lock:
@@ -217,27 +269,16 @@ class TunneldManager:
         return True
 
     def _read_log_file(self):
-        """Sleduje log soubor a aktualizuje RSD.
+        """Sleduje tunneld API (fallback: log) a aktualizuje RSD.
 
-        Pokud uz neco v logu je, vezme posledni zaznam. Pak kazdych
-        0.5s kontroluje zda neprisel novy tunel.
+        Prvne pouziva HTTP API, ktere vraci skutecne aktivni tunely.
+        Fallback na log parsing pokud API nefunguje.
         """
-        # Cekej az se log soubor objevi (max 30s)
-        for _ in range(60):
-            if self._stop_event.is_set():
-                return
-            if os.path.exists(self.LOG_PATH):
-                break
-            time.sleep(0.5)
-        else:
-            self.on_status("Chyba: tunneld log se nevytvoril")
-            return
-
         first_found = False
         no_rsd_ticks = 0
 
         while not self._stop_event.is_set():
-            addr, port = self._scan_log_for_latest_rsd()
+            addr, port = self._get_current_rsd()
             if addr and port:
                 with self._lock:
                     changed = (
@@ -257,6 +298,13 @@ class TunneldManager:
                 if no_rsd_ticks >= 120:
                     self.on_status("Chyba: tunneld nenasel tunel do 60s")
                     return
+            else:
+                # Mel jsme tunel, ted zmizel – vymazeme ulozene RSD
+                with self._lock:
+                    if self._rsd_address is not None:
+                        self._rsd_address = None
+                        self._rsd_port = None
+                        self.on_status("Tunel zmizel — cekam na novy")
 
             time.sleep(0.5)
 
@@ -790,16 +838,25 @@ class GPSSpoofApp(QMainWindow):
         threading.Thread(target=self._detect_device, daemon=True).start()
 
     def _refresh_tunnel(self):
-        """Rucni refresh RSD z logu (nacte nejnovejsi tunel)."""
+        """Rucni refresh RSD. Zepta se tunneld API na aktualni tunely."""
         def worker():
-            if self.tunneld.refresh_rsd():
+            api_addr, api_port = self.tunneld._query_tunneld_api()
+            if api_addr and api_port:
+                with self.tunneld._lock:
+                    self.tunneld._rsd_address = api_addr
+                    self.tunneld._rsd_port = api_port
+                self.bridge.status_changed.emit(
+                    f"Aktualni tunel (z API): {api_addr}:{api_port}"
+                )
+            elif self.tunneld.refresh_rsd():
                 addr, port = self.tunneld.get_rsd()
                 self.bridge.status_changed.emit(
-                    f"Aktualni tunel: {addr}:{port}"
+                    f"Aktualni tunel (z logu): {addr}:{port}"
                 )
             else:
                 self.bridge.status_changed.emit(
-                    "Zadny tunel v logu — pockej az se vytvori"
+                    "Zadny aktivni tunel. Odpoj a pripoj iPhone, "
+                    "nebo restartuj aplikaci."
                 )
         threading.Thread(target=worker, daemon=True).start()
 

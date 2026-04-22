@@ -6,6 +6,7 @@ Runs without a real iPhone, sudo privileges, or network.
 All subprocess calls are mocked.
 """
 
+import json
 import math
 import os
 import subprocess
@@ -14,6 +15,7 @@ import tempfile
 import threading
 import time
 import unittest
+import urllib.error
 from unittest.mock import MagicMock, Mock, patch, PropertyMock, call
 
 # PyQt6 requires a QApplication before any widget import
@@ -247,16 +249,34 @@ class TestTunneldManager(unittest.TestCase):
         self.assertIsNone(port)
 
     def test_refresh_rsd_updates_from_log(self):
-        """refresh_rsd() cte cerstve hodnoty z logu."""
+        """refresh_rsd() cte cerstve hodnoty z logu (API fallback)."""
         mgr, status_fn = self._make_manager()
         mgr.LOG_PATH = self._write_log(
             "Created tunnel --rsd 10.0.0.1 9999\n"
         )
         try:
-            ok = mgr.refresh_rsd()
+            with patch.object(mgr, "_query_tunneld_api",
+                              return_value=(None, None)):
+                ok = mgr.refresh_rsd()
             self.assertTrue(ok)
             self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "9999"))
             status_fn.assert_called_with("RSD obnovena: 10.0.0.1:9999")
+        finally:
+            os.unlink(mgr.LOG_PATH)
+
+    def test_refresh_rsd_uses_api_first(self):
+        """refresh_rsd() preferuje API pred logem."""
+        mgr, status_fn = self._make_manager()
+        mgr.LOG_PATH = self._write_log(
+            "Created tunnel --rsd 10.0.0.1 1111\n"  # stary tunel v logu
+        )
+        try:
+            # API vrati aktualni tunel (jiny nez log)
+            with patch.object(mgr, "_query_tunneld_api",
+                              return_value=("10.0.0.99", "9999")):
+                ok = mgr.refresh_rsd()
+            self.assertTrue(ok)
+            self.assertEqual(mgr.get_rsd(), ("10.0.0.99", "9999"))
         finally:
             os.unlink(mgr.LOG_PATH)
 
@@ -267,17 +287,80 @@ class TestTunneldManager(unittest.TestCase):
             "Created tunnel --rsd 10.0.0.1 9999\n"
         )
         try:
-            mgr.refresh_rsd()  # First call sets RSD
-            status_fn.reset_mock()
-            mgr.refresh_rsd()  # Second call - same RSD
-            status_fn.assert_not_called()
+            with patch.object(mgr, "_query_tunneld_api",
+                              return_value=(None, None)):
+                mgr.refresh_rsd()  # First call sets RSD
+                status_fn.reset_mock()
+                mgr.refresh_rsd()  # Second call - same RSD
+                status_fn.assert_not_called()
         finally:
             os.unlink(mgr.LOG_PATH)
 
     def test_refresh_rsd_empty_log(self):
         mgr, _ = self._make_manager()
         mgr.LOG_PATH = "/tmp/nonexistent_refresh_test.log"
-        self.assertFalse(mgr.refresh_rsd())
+        with patch.object(mgr, "_query_tunneld_api",
+                          return_value=(None, None)):
+            self.assertFalse(mgr.refresh_rsd())
+
+    def test_query_tunneld_api_success(self):
+        """API vrati tunely -> vrati se addr a port."""
+        mgr, _ = self._make_manager()
+        fake_response = json.dumps({
+            "UDID_XYZ": [{
+                "tunnel-address": "fdb1:7e86::1",
+                "tunnel-port": 54085,
+                "interface": "usbmux-XYZ",
+            }]
+        }).encode("utf-8")
+
+        mock_response = MagicMock()
+        mock_response.__enter__ = MagicMock(return_value=mock_response)
+        mock_response.__exit__ = MagicMock(return_value=False)
+        mock_response.read = MagicMock(return_value=fake_response)
+
+        with patch("app.urllib.request.urlopen",
+                   return_value=mock_response):
+            addr, port = mgr._query_tunneld_api()
+        self.assertEqual((addr, port), ("fdb1:7e86::1", "54085"))
+
+    def test_query_tunneld_api_empty(self):
+        """API vrati prazdny dict -> (None, None)."""
+        mgr, _ = self._make_manager()
+        fake_response = b"{}"
+        mock_response = MagicMock()
+        mock_response.__enter__ = MagicMock(return_value=mock_response)
+        mock_response.__exit__ = MagicMock(return_value=False)
+        mock_response.read = MagicMock(return_value=fake_response)
+
+        with patch("app.urllib.request.urlopen",
+                   return_value=mock_response):
+            addr, port = mgr._query_tunneld_api()
+        self.assertIsNone(addr)
+        self.assertIsNone(port)
+
+    def test_query_tunneld_api_connection_refused(self):
+        """API neodpovida (tunneld nebezi) -> (None, None)."""
+        mgr, _ = self._make_manager()
+        with patch("app.urllib.request.urlopen",
+                   side_effect=urllib.error.URLError("refused")):
+            addr, port = mgr._query_tunneld_api()
+        self.assertIsNone(addr)
+        self.assertIsNone(port)
+
+    def test_query_tunneld_api_malformed(self):
+        """API vrati neplatny JSON -> (None, None)."""
+        mgr, _ = self._make_manager()
+        mock_response = MagicMock()
+        mock_response.__enter__ = MagicMock(return_value=mock_response)
+        mock_response.__exit__ = MagicMock(return_value=False)
+        mock_response.read = MagicMock(return_value=b"not json {{{")
+
+        with patch("app.urllib.request.urlopen",
+                   return_value=mock_response):
+            addr, port = mgr._query_tunneld_api()
+        self.assertIsNone(addr)
+        self.assertIsNone(port)
 
     def test_read_log_file_finds_rsd_and_can_be_stopped(self):
         """_read_log_file najde RSD v logu, pak lze zastavit stop_eventem."""
@@ -286,15 +369,16 @@ class TestTunneldManager(unittest.TestCase):
             "Created tunnel --rsd 10.0.0.1 12345\n"
         )
         try:
-            # Run in thread, stop after short delay
-            t = threading.Thread(target=mgr._read_log_file, daemon=True)
-            t.start()
-            time.sleep(1.0)  # Give it time to read
-            mgr._stop_event.set()
-            t.join(timeout=3)
+            # Mock API to return None so log fallback is used
+            with patch.object(mgr, "_query_tunneld_api",
+                              return_value=(None, None)):
+                t = threading.Thread(target=mgr._read_log_file, daemon=True)
+                t.start()
+                time.sleep(1.0)
+                mgr._stop_event.set()
+                t.join(timeout=3)
             self.assertFalse(t.is_alive())
             self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "12345"))
-            # Check status was reported
             calls = [c[0][0] for c in status_fn.call_args_list]
             self.assertTrue(
                 any("Tunel pripraven" in c for c in calls)
@@ -863,13 +947,20 @@ class TestGPSSpoofAppInputValidation(unittest.TestCase):
         cls.patcher_device = patch.object(
             gps_app.DeviceDetector, "is_device_connected", return_value=False
         )
+        # Zabranit aby pravdepodobne bezici tunneld API ovlivnilo testy
+        cls.patcher_api = patch.object(
+            gps_app.TunneldManager, "_query_tunneld_api",
+            return_value=(None, None),
+        )
         cls.patcher_tunneld.start()
         cls.patcher_device.start()
+        cls.patcher_api.start()
 
     @classmethod
     def tearDownClass(cls):
         cls.patcher_tunneld.stop()
         cls.patcher_device.stop()
+        cls.patcher_api.stop()
 
     def setUp(self):
         self.window = gps_app.GPSSpoofApp()
@@ -1001,13 +1092,20 @@ class TestGPSSpoofAppActions(unittest.TestCase):
         cls.patcher_device = patch.object(
             gps_app.DeviceDetector, "is_device_connected", return_value=False
         )
+        # Zabranit aby pravdepodobne bezici tunneld API ovlivnilo testy
+        cls.patcher_api = patch.object(
+            gps_app.TunneldManager, "_query_tunneld_api",
+            return_value=(None, None),
+        )
         cls.patcher_tunneld.start()
         cls.patcher_device.start()
+        cls.patcher_api.start()
 
     @classmethod
     def tearDownClass(cls):
         cls.patcher_tunneld.stop()
         cls.patcher_device.stop()
+        cls.patcher_api.stop()
 
     def setUp(self):
         self.window = gps_app.GPSSpoofApp()
@@ -1167,13 +1265,20 @@ class TestIntegrationFlows(unittest.TestCase):
         cls.patcher_device = patch.object(
             gps_app.DeviceDetector, "is_device_connected", return_value=False
         )
+        # Zabranit aby pravdepodobne bezici tunneld API ovlivnilo testy
+        cls.patcher_api = patch.object(
+            gps_app.TunneldManager, "_query_tunneld_api",
+            return_value=(None, None),
+        )
         cls.patcher_tunneld.start()
         cls.patcher_device.start()
+        cls.patcher_api.start()
 
     @classmethod
     def tearDownClass(cls):
         cls.patcher_tunneld.stop()
         cls.patcher_device.stop()
+        cls.patcher_api.stop()
 
     def setUp(self):
         self.window = gps_app.GPSSpoofApp()
@@ -1298,13 +1403,20 @@ class TestEdgeCases(unittest.TestCase):
         cls.patcher_device = patch.object(
             gps_app.DeviceDetector, "is_device_connected", return_value=False
         )
+        # Zabranit aby pravdepodobne bezici tunneld API ovlivnilo testy
+        cls.patcher_api = patch.object(
+            gps_app.TunneldManager, "_query_tunneld_api",
+            return_value=(None, None),
+        )
         cls.patcher_tunneld.start()
         cls.patcher_device.start()
+        cls.patcher_api.start()
 
     @classmethod
     def tearDownClass(cls):
         cls.patcher_tunneld.stop()
         cls.patcher_device.stop()
+        cls.patcher_api.stop()
 
     def setUp(self):
         self.window = gps_app.GPSSpoofApp()
