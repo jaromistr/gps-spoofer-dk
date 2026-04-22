@@ -1,0 +1,1424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="PragueMetroSim"
+  xmlns="http://www.topografix.com/GPX/1/1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.topografix.com/GPX/1/1
+    http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <metadata>
+    <name>Prague Metro: Nádraží Veleslavín → Kačerov</name>
+    <desc>Line A (Nádraží Veleslavín → Muzeum) + Transfer + Line C (Muzeum → Kačerov). Coordinates from Wikipedia/OpenStreetMap. 352 trackpoints, 28.0 min.</desc>
+  </metadata>
+  <trk>
+    <name>Veleslavín → Kačerov (Metro A+C)</name>
+    <trkseg>
+      <trkpt lat="50.095919" lon="14.348488">
+        <time>2026-04-22T08:00:00Z</time>
+        <name>Nádraží Veleslavín</name>
+      </trkpt>
+      <trkpt lat="50.095919" lon="14.348500">
+        <time>2026-04-22T08:00:05Z</time>
+        <name>Nádraží Veleslavín</name>
+      </trkpt>
+      <trkpt lat="50.095919" lon="14.348469">
+        <time>2026-04-22T08:00:10Z</time>
+        <name>Nádraží Veleslavín</name>
+      </trkpt>
+      <trkpt lat="50.095923" lon="14.348486">
+        <time>2026-04-22T08:00:15Z</time>
+        <name>Nádraží Veleslavín</name>
+      </trkpt>
+      <trkpt lat="50.096042" lon="14.349236">
+        <time>2026-04-22T08:00:20Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.096167" lon="14.349935">
+        <time>2026-04-22T08:00:25Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.096268" lon="14.350633">
+        <time>2026-04-22T08:00:30Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.096400" lon="14.351403">
+        <time>2026-04-22T08:00:35Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.096520" lon="14.352093">
+        <time>2026-04-22T08:00:40Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.096668" lon="14.352776">
+        <time>2026-04-22T08:00:45Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.096799" lon="14.353528">
+        <time>2026-04-22T08:00:50Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.096957" lon="14.354223">
+        <time>2026-04-22T08:00:55Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.097093" lon="14.354945">
+        <time>2026-04-22T08:01:00Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.097237" lon="14.355629">
+        <time>2026-04-22T08:01:05Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.097357" lon="14.356340">
+        <time>2026-04-22T08:01:10Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.097438" lon="14.357079">
+        <time>2026-04-22T08:01:15Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.097584" lon="14.357830">
+        <time>2026-04-22T08:01:20Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.097729" lon="14.358505">
+        <time>2026-04-22T08:01:25Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.097849" lon="14.359232">
+        <time>2026-04-22T08:01:30Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.097945" lon="14.359972">
+        <time>2026-04-22T08:01:35Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098056" lon="14.360721">
+        <time>2026-04-22T08:01:40Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098172" lon="14.361436">
+        <time>2026-04-22T08:01:45Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098280" lon="14.362165">
+        <time>2026-04-22T08:01:50Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098372" lon="14.362865">
+        <time>2026-04-22T08:01:55Z</time>
+        <name>→ Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098376" lon="14.362887">
+        <time>2026-04-22T08:01:55Z</time>
+        <name>Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098378" lon="14.362913">
+        <time>2026-04-22T08:02:00Z</time>
+        <name>Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098373" lon="14.362865">
+        <time>2026-04-22T08:02:05Z</time>
+        <name>Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098387" lon="14.362900">
+        <time>2026-04-22T08:02:10Z</time>
+        <name>Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098385" lon="14.362892">
+        <time>2026-04-22T08:02:15Z</time>
+        <name>Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098393" lon="14.362879">
+        <time>2026-04-22T08:02:20Z</time>
+        <name>Bořislavka</name>
+      </trkpt>
+      <trkpt lat="50.098492" lon="14.364062">
+        <time>2026-04-22T08:02:25Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.098579" lon="14.365310">
+        <time>2026-04-22T08:02:30Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.098674" lon="14.366533">
+        <time>2026-04-22T08:02:35Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.098786" lon="14.367779">
+        <time>2026-04-22T08:02:40Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.098871" lon="14.368933">
+        <time>2026-04-22T08:02:45Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.098937" lon="14.370144">
+        <time>2026-04-22T08:02:50Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099038" lon="14.371365">
+        <time>2026-04-22T08:02:55Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099105" lon="14.372609">
+        <time>2026-04-22T08:03:00Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099178" lon="14.373803">
+        <time>2026-04-22T08:03:05Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099244" lon="14.375002">
+        <time>2026-04-22T08:03:10Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099342" lon="14.376249">
+        <time>2026-04-22T08:03:15Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099447" lon="14.377456">
+        <time>2026-04-22T08:03:20Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099515" lon="14.378676">
+        <time>2026-04-22T08:03:25Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099607" lon="14.379907">
+        <time>2026-04-22T08:03:30Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099677" lon="14.381083">
+        <time>2026-04-22T08:03:35Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099767" lon="14.382328">
+        <time>2026-04-22T08:03:40Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099852" lon="14.383535">
+        <time>2026-04-22T08:03:45Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.099943" lon="14.384744">
+        <time>2026-04-22T08:03:50Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100019" lon="14.385970">
+        <time>2026-04-22T08:03:55Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100109" lon="14.387153">
+        <time>2026-04-22T08:04:00Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100232" lon="14.388415">
+        <time>2026-04-22T08:04:05Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100364" lon="14.389608">
+        <time>2026-04-22T08:04:10Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100439" lon="14.390817">
+        <time>2026-04-22T08:04:15Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100597" lon="14.391998">
+        <time>2026-04-22T08:04:20Z</time>
+        <name>→ Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100584" lon="14.392010">
+        <time>2026-04-22T08:04:20Z</time>
+        <name>Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100605" lon="14.391995">
+        <time>2026-04-22T08:04:25Z</time>
+        <name>Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100586" lon="14.392029">
+        <time>2026-04-22T08:04:30Z</time>
+        <name>Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100586" lon="14.392005">
+        <time>2026-04-22T08:04:35Z</time>
+        <name>Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100591" lon="14.391993">
+        <time>2026-04-22T08:04:40Z</time>
+        <name>Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100592" lon="14.391993">
+        <time>2026-04-22T08:04:45Z</time>
+        <name>Dejvická</name>
+      </trkpt>
+      <trkpt lat="50.100566" lon="14.392882">
+        <time>2026-04-22T08:04:50Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.100498" lon="14.393715">
+        <time>2026-04-22T08:04:55Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.100423" lon="14.394615">
+        <time>2026-04-22T08:05:00Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.100332" lon="14.395420">
+        <time>2026-04-22T08:05:05Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.100156" lon="14.396299">
+        <time>2026-04-22T08:05:10Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.099997" lon="14.397133">
+        <time>2026-04-22T08:05:15Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.099811" lon="14.397938">
+        <time>2026-04-22T08:05:20Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.099582" lon="14.398758">
+        <time>2026-04-22T08:05:25Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.099382" lon="14.399600">
+        <time>2026-04-22T08:05:30Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.099162" lon="14.400368">
+        <time>2026-04-22T08:05:35Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.098908" lon="14.401133">
+        <time>2026-04-22T08:05:40Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.098589" lon="14.401844">
+        <time>2026-04-22T08:05:45Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.098261" lon="14.402512">
+        <time>2026-04-22T08:05:50Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.097883" lon="14.403208">
+        <time>2026-04-22T08:05:55Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.097561" lon="14.403895">
+        <time>2026-04-22T08:06:00Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.097201" lon="14.404594">
+        <time>2026-04-22T08:06:05Z</time>
+        <name>→ Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.097211" lon="14.404580">
+        <time>2026-04-22T08:06:05Z</time>
+        <name>Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.097221" lon="14.404579">
+        <time>2026-04-22T08:06:10Z</time>
+        <name>Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.097213" lon="14.404600">
+        <time>2026-04-22T08:06:15Z</time>
+        <name>Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.097212" lon="14.404566">
+        <time>2026-04-22T08:06:20Z</time>
+        <name>Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.097211" lon="14.404591">
+        <time>2026-04-22T08:06:25Z</time>
+        <name>Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.097211" lon="14.404577">
+        <time>2026-04-22T08:06:30Z</time>
+        <name>Hradčanská</name>
+      </trkpt>
+      <trkpt lat="50.096849" lon="14.404836">
+        <time>2026-04-22T08:06:35Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.096537" lon="14.405077">
+        <time>2026-04-22T08:06:40Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.096208" lon="14.405362">
+        <time>2026-04-22T08:06:45Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.095853" lon="14.405644">
+        <time>2026-04-22T08:06:50Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.095547" lon="14.405920">
+        <time>2026-04-22T08:06:55Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.095238" lon="14.406267">
+        <time>2026-04-22T08:07:00Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.094905" lon="14.406596">
+        <time>2026-04-22T08:07:05Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.094604" lon="14.406890">
+        <time>2026-04-22T08:07:10Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.094286" lon="14.407241">
+        <time>2026-04-22T08:07:15Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.093953" lon="14.407545">
+        <time>2026-04-22T08:07:20Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.093646" lon="14.407902">
+        <time>2026-04-22T08:07:25Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.093303" lon="14.408186">
+        <time>2026-04-22T08:07:30Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.093007" lon="14.408487">
+        <time>2026-04-22T08:07:35Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.092684" lon="14.408692">
+        <time>2026-04-22T08:07:40Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.092334" lon="14.408882">
+        <time>2026-04-22T08:07:45Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.091954" lon="14.409081">
+        <time>2026-04-22T08:07:50Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.091585" lon="14.409292">
+        <time>2026-04-22T08:07:55Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.091236" lon="14.409494">
+        <time>2026-04-22T08:08:00Z</time>
+        <name>→ Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.091221" lon="14.409518">
+        <time>2026-04-22T08:08:00Z</time>
+        <name>Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.091238" lon="14.409514">
+        <time>2026-04-22T08:08:05Z</time>
+        <name>Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.091231" lon="14.409494">
+        <time>2026-04-22T08:08:10Z</time>
+        <name>Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.091268" lon="14.409478">
+        <time>2026-04-22T08:08:15Z</time>
+        <name>Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.091227" lon="14.409482">
+        <time>2026-04-22T08:08:20Z</time>
+        <name>Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.091244" lon="14.409500">
+        <time>2026-04-22T08:08:25Z</time>
+        <name>Malostranská</name>
+      </trkpt>
+      <trkpt lat="50.091051" lon="14.409935">
+        <time>2026-04-22T08:08:30Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.090922" lon="14.410408">
+        <time>2026-04-22T08:08:35Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.090712" lon="14.410852">
+        <time>2026-04-22T08:08:40Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.090590" lon="14.411352">
+        <time>2026-04-22T08:08:45Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.090405" lon="14.411762">
+        <time>2026-04-22T08:08:50Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.090203" lon="14.412183">
+        <time>2026-04-22T08:08:55Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.090043" lon="14.412656">
+        <time>2026-04-22T08:09:00Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.089872" lon="14.413079">
+        <time>2026-04-22T08:09:05Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.089672" lon="14.413519">
+        <time>2026-04-22T08:09:10Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.089511" lon="14.414009">
+        <time>2026-04-22T08:09:15Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.089335" lon="14.414448">
+        <time>2026-04-22T08:09:20Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.089211" lon="14.414947">
+        <time>2026-04-22T08:09:25Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.089045" lon="14.415396">
+        <time>2026-04-22T08:09:30Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088870" lon="14.415812">
+        <time>2026-04-22T08:09:35Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088695" lon="14.416310">
+        <time>2026-04-22T08:09:40Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088546" lon="14.416739">
+        <time>2026-04-22T08:09:45Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088406" lon="14.417179">
+        <time>2026-04-22T08:09:50Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088198" lon="14.417636">
+        <time>2026-04-22T08:09:55Z</time>
+        <name>→ Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088188" lon="14.417662">
+        <time>2026-04-22T08:09:55Z</time>
+        <name>Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088204" lon="14.417610">
+        <time>2026-04-22T08:10:00Z</time>
+        <name>Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088186" lon="14.417636">
+        <time>2026-04-22T08:10:05Z</time>
+        <name>Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088197" lon="14.417611">
+        <time>2026-04-22T08:10:10Z</time>
+        <name>Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088170" lon="14.417603">
+        <time>2026-04-22T08:10:15Z</time>
+        <name>Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.088189" lon="14.417629">
+        <time>2026-04-22T08:10:20Z</time>
+        <name>Staroměstská</name>
+      </trkpt>
+      <trkpt lat="50.087850" lon="14.417960">
+        <time>2026-04-22T08:10:25Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.087548" lon="14.418382">
+        <time>2026-04-22T08:10:30Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.087234" lon="14.418763">
+        <time>2026-04-22T08:10:35Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.086898" lon="14.419153">
+        <time>2026-04-22T08:10:40Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.086585" lon="14.419503">
+        <time>2026-04-22T08:10:45Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.086266" lon="14.419896">
+        <time>2026-04-22T08:10:50Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.085931" lon="14.420304">
+        <time>2026-04-22T08:10:55Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.085650" lon="14.420685">
+        <time>2026-04-22T08:11:00Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.085323" lon="14.421092">
+        <time>2026-04-22T08:11:05Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.085042" lon="14.421477">
+        <time>2026-04-22T08:11:10Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.084699" lon="14.421855">
+        <time>2026-04-22T08:11:15Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.084384" lon="14.422218">
+        <time>2026-04-22T08:11:20Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.084058" lon="14.422614">
+        <time>2026-04-22T08:11:25Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.083760" lon="14.423001">
+        <time>2026-04-22T08:11:30Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.083424" lon="14.423335">
+        <time>2026-04-22T08:11:35Z</time>
+        <name>→ Můstek</name>
+      </trkpt>
+      <trkpt lat="50.083416" lon="14.423334">
+        <time>2026-04-22T08:11:35Z</time>
+        <name>Můstek</name>
+      </trkpt>
+      <trkpt lat="50.083413" lon="14.423356">
+        <time>2026-04-22T08:11:40Z</time>
+        <name>Můstek</name>
+      </trkpt>
+      <trkpt lat="50.083403" lon="14.423378">
+        <time>2026-04-22T08:11:45Z</time>
+        <name>Můstek</name>
+      </trkpt>
+      <trkpt lat="50.083415" lon="14.423323">
+        <time>2026-04-22T08:11:50Z</time>
+        <name>Můstek</name>
+      </trkpt>
+      <trkpt lat="50.083415" lon="14.423344">
+        <time>2026-04-22T08:11:55Z</time>
+        <name>Můstek</name>
+      </trkpt>
+      <trkpt lat="50.083410" lon="14.423357">
+        <time>2026-04-22T08:12:00Z</time>
+        <name>Můstek</name>
+      </trkpt>
+      <trkpt lat="50.083136" lon="14.423835">
+        <time>2026-04-22T08:12:05Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.082910" lon="14.424328">
+        <time>2026-04-22T08:12:10Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.082658" lon="14.424714">
+        <time>2026-04-22T08:12:15Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.082409" lon="14.425214">
+        <time>2026-04-22T08:12:20Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.082210" lon="14.425784">
+        <time>2026-04-22T08:12:25Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.081963" lon="14.426346">
+        <time>2026-04-22T08:12:30Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.081777" lon="14.426789">
+        <time>2026-04-22T08:12:35Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.081562" lon="14.427339">
+        <time>2026-04-22T08:12:40Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.081380" lon="14.427895">
+        <time>2026-04-22T08:12:45Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.081229" lon="14.428435">
+        <time>2026-04-22T08:12:50Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.081047" lon="14.429064">
+        <time>2026-04-22T08:12:55Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080863" lon="14.429590">
+        <time>2026-04-22T08:13:00Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080705" lon="14.430129">
+        <time>2026-04-22T08:13:05Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080540" lon="14.430704">
+        <time>2026-04-22T08:13:10Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080347" lon="14.431297">
+        <time>2026-04-22T08:13:15Z</time>
+        <name>→ Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080367" lon="14.431258">
+        <time>2026-04-22T08:13:15Z</time>
+        <name>Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080354" lon="14.431249">
+        <time>2026-04-22T08:13:20Z</time>
+        <name>Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080371" lon="14.431258">
+        <time>2026-04-22T08:13:25Z</time>
+        <name>Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080364" lon="14.431257">
+        <time>2026-04-22T08:13:30Z</time>
+        <name>Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080366" lon="14.431258">
+        <time>2026-04-22T08:13:35Z</time>
+        <name>Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080367" lon="14.431257">
+        <time>2026-04-22T08:13:40Z</time>
+        <name>Muzeum</name>
+      </trkpt>
+      <trkpt lat="50.080379" lon="14.431284">
+        <time>2026-04-22T08:13:40Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080357" lon="14.431230">
+        <time>2026-04-22T08:13:45Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080339" lon="14.431234">
+        <time>2026-04-22T08:13:50Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080338" lon="14.431290">
+        <time>2026-04-22T08:13:55Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080359" lon="14.431315">
+        <time>2026-04-22T08:14:00Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080411" lon="14.431261">
+        <time>2026-04-22T08:14:05Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080325" lon="14.431247">
+        <time>2026-04-22T08:14:10Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080358" lon="14.431208">
+        <time>2026-04-22T08:14:15Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080354" lon="14.431270">
+        <time>2026-04-22T08:14:20Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080350" lon="14.431233">
+        <time>2026-04-22T08:14:25Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080343" lon="14.431323">
+        <time>2026-04-22T08:14:30Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080356" lon="14.431231">
+        <time>2026-04-22T08:14:35Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080352" lon="14.431293">
+        <time>2026-04-22T08:14:40Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080345" lon="14.431277">
+        <time>2026-04-22T08:14:45Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080376" lon="14.431286">
+        <time>2026-04-22T08:14:50Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080391" lon="14.431241">
+        <time>2026-04-22T08:14:55Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080385" lon="14.431232">
+        <time>2026-04-22T08:15:00Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080351" lon="14.431302">
+        <time>2026-04-22T08:15:05Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080378" lon="14.431260">
+        <time>2026-04-22T08:15:10Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080333" lon="14.431280">
+        <time>2026-04-22T08:15:15Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080346" lon="14.431228">
+        <time>2026-04-22T08:15:20Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080345" lon="14.431269">
+        <time>2026-04-22T08:15:25Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080312" lon="14.431273">
+        <time>2026-04-22T08:15:30Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080364" lon="14.431240">
+        <time>2026-04-22T08:15:35Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080383" lon="14.431281">
+        <time>2026-04-22T08:15:40Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080346" lon="14.431237">
+        <time>2026-04-22T08:15:45Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080376" lon="14.431207">
+        <time>2026-04-22T08:15:50Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080353" lon="14.431238">
+        <time>2026-04-22T08:15:55Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080362" lon="14.431267">
+        <time>2026-04-22T08:16:00Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080361" lon="14.431300">
+        <time>2026-04-22T08:16:05Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080365" lon="14.431249">
+        <time>2026-04-22T08:16:10Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080333" lon="14.431285">
+        <time>2026-04-22T08:16:15Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080372" lon="14.431311">
+        <time>2026-04-22T08:16:20Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080343" lon="14.431261">
+        <time>2026-04-22T08:16:25Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080359" lon="14.431257">
+        <time>2026-04-22T08:16:30Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080360" lon="14.431200">
+        <time>2026-04-22T08:16:35Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080379" lon="14.431283">
+        <time>2026-04-22T08:16:40Z</time>
+        <name>Transfer Muzeum A→C</name>
+      </trkpt>
+      <trkpt lat="50.080370" lon="14.431291">
+        <time>2026-04-22T08:16:40Z</time>
+        <name>Muzeum (C)</name>
+      </trkpt>
+      <trkpt lat="50.080357" lon="14.431259">
+        <time>2026-04-22T08:16:45Z</time>
+        <name>Muzeum (C)</name>
+      </trkpt>
+      <trkpt lat="50.080360" lon="14.431287">
+        <time>2026-04-22T08:16:50Z</time>
+        <name>Muzeum (C)</name>
+      </trkpt>
+      <trkpt lat="50.080344" lon="14.431267">
+        <time>2026-04-22T08:16:55Z</time>
+        <name>Muzeum (C)</name>
+      </trkpt>
+      <trkpt lat="50.080347" lon="14.431224">
+        <time>2026-04-22T08:17:00Z</time>
+        <name>Muzeum (C)</name>
+      </trkpt>
+      <trkpt lat="50.079785" lon="14.431001">
+        <time>2026-04-22T08:17:05Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.079177" lon="14.430754">
+        <time>2026-04-22T08:17:10Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.078599" lon="14.430514">
+        <time>2026-04-22T08:17:15Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.078052" lon="14.430130">
+        <time>2026-04-22T08:17:20Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.077475" lon="14.429741">
+        <time>2026-04-22T08:17:25Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.076936" lon="14.429357">
+        <time>2026-04-22T08:17:30Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.076389" lon="14.428885">
+        <time>2026-04-22T08:17:35Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.075838" lon="14.428464">
+        <time>2026-04-22T08:17:40Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.075312" lon="14.428050">
+        <time>2026-04-22T08:17:45Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.074759" lon="14.427626">
+        <time>2026-04-22T08:17:50Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.074211" lon="14.427171">
+        <time>2026-04-22T08:17:55Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.073703" lon="14.426707">
+        <time>2026-04-22T08:18:00Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.073199" lon="14.426124">
+        <time>2026-04-22T08:18:05Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.072686" lon="14.425602">
+        <time>2026-04-22T08:18:10Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.072192" lon="14.425051">
+        <time>2026-04-22T08:18:15Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.071674" lon="14.424522">
+        <time>2026-04-22T08:18:20Z</time>
+        <name>→ I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.071688" lon="14.424489">
+        <time>2026-04-22T08:18:20Z</time>
+        <name>I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.071710" lon="14.424481">
+        <time>2026-04-22T08:18:25Z</time>
+        <name>I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.071699" lon="14.424501">
+        <time>2026-04-22T08:18:30Z</time>
+        <name>I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.071691" lon="14.424519">
+        <time>2026-04-22T08:18:35Z</time>
+        <name>I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.071713" lon="14.424472">
+        <time>2026-04-22T08:18:40Z</time>
+        <name>I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.071687" lon="14.424511">
+        <time>2026-04-22T08:18:45Z</time>
+        <name>I.P. Pavlova</name>
+      </trkpt>
+      <trkpt lat="50.071007" lon="14.424566">
+        <time>2026-04-22T08:18:50Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.070308" lon="14.424605">
+        <time>2026-04-22T08:18:55Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.069606" lon="14.424681">
+        <time>2026-04-22T08:19:00Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.068915" lon="14.424710">
+        <time>2026-04-22T08:19:05Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.068220" lon="14.424728">
+        <time>2026-04-22T08:19:10Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.067530" lon="14.424746">
+        <time>2026-04-22T08:19:15Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.066823" lon="14.424789">
+        <time>2026-04-22T08:19:20Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.066161" lon="14.424800">
+        <time>2026-04-22T08:19:25Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.065457" lon="14.424836">
+        <time>2026-04-22T08:19:30Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.064764" lon="14.424848">
+        <time>2026-04-22T08:19:35Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.064059" lon="14.424883">
+        <time>2026-04-22T08:19:40Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.063362" lon="14.424868">
+        <time>2026-04-22T08:19:45Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.062667" lon="14.424867">
+        <time>2026-04-22T08:19:50Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.061971" lon="14.424929">
+        <time>2026-04-22T08:19:55Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.061293" lon="14.424938">
+        <time>2026-04-22T08:20:00Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.060593" lon="14.424948">
+        <time>2026-04-22T08:20:05Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.059872" lon="14.424932">
+        <time>2026-04-22T08:20:10Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.059177" lon="14.424946">
+        <time>2026-04-22T08:20:15Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.058504" lon="14.424983">
+        <time>2026-04-22T08:20:20Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.057808" lon="14.425002">
+        <time>2026-04-22T08:20:25Z</time>
+        <name>→ Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.057809" lon="14.425015">
+        <time>2026-04-22T08:20:25Z</time>
+        <name>Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.057794" lon="14.424996">
+        <time>2026-04-22T08:20:30Z</time>
+        <name>Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.057795" lon="14.424977">
+        <time>2026-04-22T08:20:35Z</time>
+        <name>Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.057806" lon="14.425017">
+        <time>2026-04-22T08:20:40Z</time>
+        <name>Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.057800" lon="14.424993">
+        <time>2026-04-22T08:20:45Z</time>
+        <name>Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.057810" lon="14.424967">
+        <time>2026-04-22T08:20:50Z</time>
+        <name>Vyšehrad</name>
+      </trkpt>
+      <trkpt lat="50.057631" lon="14.425634">
+        <time>2026-04-22T08:20:55Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.057490" lon="14.426205">
+        <time>2026-04-22T08:21:00Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.057315" lon="14.426807">
+        <time>2026-04-22T08:21:05Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.057148" lon="14.427393">
+        <time>2026-04-22T08:21:10Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.057012" lon="14.428048">
+        <time>2026-04-22T08:21:15Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.056852" lon="14.428614">
+        <time>2026-04-22T08:21:20Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.056716" lon="14.429289">
+        <time>2026-04-22T08:21:25Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.056538" lon="14.429839">
+        <time>2026-04-22T08:21:30Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.056371" lon="14.430478">
+        <time>2026-04-22T08:21:35Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.056218" lon="14.431079">
+        <time>2026-04-22T08:21:40Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.056092" lon="14.431658">
+        <time>2026-04-22T08:21:45Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.055929" lon="14.432317">
+        <time>2026-04-22T08:21:50Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.055687" lon="14.432832">
+        <time>2026-04-22T08:21:55Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.055501" lon="14.433418">
+        <time>2026-04-22T08:22:00Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.055303" lon="14.433963">
+        <time>2026-04-22T08:22:05Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.055104" lon="14.434633">
+        <time>2026-04-22T08:22:10Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.054894" lon="14.435167">
+        <time>2026-04-22T08:22:15Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.054690" lon="14.435763">
+        <time>2026-04-22T08:22:20Z</time>
+        <name>→ Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.054708" lon="14.435777">
+        <time>2026-04-22T08:22:20Z</time>
+        <name>Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.054712" lon="14.435745">
+        <time>2026-04-22T08:22:25Z</time>
+        <name>Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.054715" lon="14.435743">
+        <time>2026-04-22T08:22:30Z</time>
+        <name>Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.054698" lon="14.435754">
+        <time>2026-04-22T08:22:35Z</time>
+        <name>Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.054708" lon="14.435752">
+        <time>2026-04-22T08:22:40Z</time>
+        <name>Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.054713" lon="14.435743">
+        <time>2026-04-22T08:22:45Z</time>
+        <name>Pražského povstání</name>
+      </trkpt>
+      <trkpt lat="50.054433" lon="14.436057">
+        <time>2026-04-22T08:22:50Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.054183" lon="14.436275">
+        <time>2026-04-22T08:22:55Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.053956" lon="14.436565">
+        <time>2026-04-22T08:23:00Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.053680" lon="14.436850">
+        <time>2026-04-22T08:23:05Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.053378" lon="14.437110">
+        <time>2026-04-22T08:23:10Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.053136" lon="14.437359">
+        <time>2026-04-22T08:23:15Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.052861" lon="14.437669">
+        <time>2026-04-22T08:23:20Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.052634" lon="14.437954">
+        <time>2026-04-22T08:23:25Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.052364" lon="14.438209">
+        <time>2026-04-22T08:23:30Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.052097" lon="14.438495">
+        <time>2026-04-22T08:23:35Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.051839" lon="14.438783">
+        <time>2026-04-22T08:23:40Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.051595" lon="14.439049">
+        <time>2026-04-22T08:23:45Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.051335" lon="14.439333">
+        <time>2026-04-22T08:23:50Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.051080" lon="14.439641">
+        <time>2026-04-22T08:23:55Z</time>
+        <name>→ Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.051082" lon="14.439637">
+        <time>2026-04-22T08:23:55Z</time>
+        <name>Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.051065" lon="14.439625">
+        <time>2026-04-22T08:24:00Z</time>
+        <name>Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.051082" lon="14.439639">
+        <time>2026-04-22T08:24:05Z</time>
+        <name>Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.051066" lon="14.439632">
+        <time>2026-04-22T08:24:10Z</time>
+        <name>Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.051091" lon="14.439628">
+        <time>2026-04-22T08:24:15Z</time>
+        <name>Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.051079" lon="14.439636">
+        <time>2026-04-22T08:24:20Z</time>
+        <name>Pankrác</name>
+      </trkpt>
+      <trkpt lat="50.050649" lon="14.440021">
+        <time>2026-04-22T08:24:25Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.050206" lon="14.440403">
+        <time>2026-04-22T08:24:30Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.049802" lon="14.440790">
+        <time>2026-04-22T08:24:35Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.049351" lon="14.441172">
+        <time>2026-04-22T08:24:40Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.048940" lon="14.441570">
+        <time>2026-04-22T08:24:45Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.048553" lon="14.442055">
+        <time>2026-04-22T08:24:50Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.048138" lon="14.442565">
+        <time>2026-04-22T08:24:55Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.047765" lon="14.443052">
+        <time>2026-04-22T08:25:00Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.047389" lon="14.443523">
+        <time>2026-04-22T08:25:05Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.046993" lon="14.444002">
+        <time>2026-04-22T08:25:10Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.046664" lon="14.444601">
+        <time>2026-04-22T08:25:15Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.046314" lon="14.445159">
+        <time>2026-04-22T08:25:20Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.045956" lon="14.445716">
+        <time>2026-04-22T08:25:25Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.045633" lon="14.446289">
+        <time>2026-04-22T08:25:30Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.045314" lon="14.446863">
+        <time>2026-04-22T08:25:35Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.045018" lon="14.447500">
+        <time>2026-04-22T08:25:40Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.044703" lon="14.448134">
+        <time>2026-04-22T08:25:45Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.044395" lon="14.448775">
+        <time>2026-04-22T08:25:50Z</time>
+        <name>→ Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.044428" lon="14.448759">
+        <time>2026-04-22T08:25:50Z</time>
+        <name>Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.044411" lon="14.448747">
+        <time>2026-04-22T08:25:55Z</time>
+        <name>Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.044419" lon="14.448726">
+        <time>2026-04-22T08:26:00Z</time>
+        <name>Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.044422" lon="14.448769">
+        <time>2026-04-22T08:26:05Z</time>
+        <name>Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.044417" lon="14.448753">
+        <time>2026-04-22T08:26:10Z</time>
+        <name>Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.044422" lon="14.448765">
+        <time>2026-04-22T08:26:15Z</time>
+        <name>Budějovická</name>
+      </trkpt>
+      <trkpt lat="50.044260" lon="14.449415">
+        <time>2026-04-22T08:26:20Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.044122" lon="14.450121">
+        <time>2026-04-22T08:26:25Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.043965" lon="14.450731">
+        <time>2026-04-22T08:26:30Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.043807" lon="14.451373">
+        <time>2026-04-22T08:26:35Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.043666" lon="14.452049">
+        <time>2026-04-22T08:26:40Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.043486" lon="14.452696">
+        <time>2026-04-22T08:26:45Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.043330" lon="14.453409">
+        <time>2026-04-22T08:26:50Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.043167" lon="14.454019">
+        <time>2026-04-22T08:26:55Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.043006" lon="14.454694">
+        <time>2026-04-22T08:27:00Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.042829" lon="14.455362">
+        <time>2026-04-22T08:27:05Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.042642" lon="14.455965">
+        <time>2026-04-22T08:27:10Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.042465" lon="14.456652">
+        <time>2026-04-22T08:27:15Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.042305" lon="14.457274">
+        <time>2026-04-22T08:27:20Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.042173" lon="14.457957">
+        <time>2026-04-22T08:27:25Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.041999" lon="14.458628">
+        <time>2026-04-22T08:27:30Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.041864" lon="14.459296">
+        <time>2026-04-22T08:27:35Z</time>
+        <name>→ Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.041847" lon="14.459300">
+        <time>2026-04-22T08:27:35Z</time>
+        <name>Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.041869" lon="14.459309">
+        <time>2026-04-22T08:27:40Z</time>
+        <name>Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.041856" lon="14.459274">
+        <time>2026-04-22T08:27:45Z</time>
+        <name>Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.041884" lon="14.459273">
+        <time>2026-04-22T08:27:50Z</time>
+        <name>Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.041847" lon="14.459280">
+        <time>2026-04-22T08:27:55Z</time>
+        <name>Kačerov</name>
+      </trkpt>
+      <trkpt lat="50.041865" lon="14.459296">
+        <time>2026-04-22T08:28:00Z</time>
+        <name>Kačerov</name>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>
