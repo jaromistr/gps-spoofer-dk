@@ -179,10 +179,49 @@ class TunneldManager:
             self.on_status(f"Chyba pri spusteni tunneld: {e}")
             return False
 
+    _RSD_PATTERN = re.compile(r"Created tunnel --rsd\s+(\S+)\s+(\d+)")
+
+    def _scan_log_for_latest_rsd(self):
+        """Precte cely log a vrati POSLEDNI RSD match (nejnovejsi tunel).
+
+        Vraci (addr, port) nebo (None, None).
+        """
+        if not os.path.exists(self.LOG_PATH):
+            return None, None
+        try:
+            with open(self.LOG_PATH, "r") as f:
+                content = f.read()
+        except Exception:
+            return None, None
+        matches = self._RSD_PATTERN.findall(content)
+        if not matches:
+            return None, None
+        # Posledni match = nejnovejsi tunel
+        return matches[-1]
+
+    def refresh_rsd(self):
+        """Znovu nacte posledni RSD z logu. Vola se pred kazdym prikazem
+        aby se pouzil aktualni tunel (stary muze byt zboren).
+
+        Vraci True pokud se RSD zmenila.
+        """
+        addr, port = self._scan_log_for_latest_rsd()
+        if not addr or not port:
+            return False
+        with self._lock:
+            changed = (self._rsd_address != addr or self._rsd_port != port)
+            self._rsd_address = addr
+            self._rsd_port = port
+        if changed:
+            self.on_status(f"RSD obnovena: {addr}:{port}")
+        return True
+
     def _read_log_file(self):
-        """Cte log soubor tunneld a hleda RSD adresu/port."""
-        rsd_pattern = re.compile(r"Created tunnel --rsd\s+(\S+)\s+(\d+)")
-        read_pos = 0
+        """Sleduje log soubor a aktualizuje RSD.
+
+        Pokud uz neco v logu je, vezme posledni zaznam. Pak kazdych
+        0.5s kontroluje zda neprisel novy tunel.
+        """
         # Cekej az se log soubor objevi (max 30s)
         for _ in range(60):
             if self._stop_event.is_set():
@@ -194,33 +233,32 @@ class TunneldManager:
             self.on_status("Chyba: tunneld log se nevytvoril")
             return
 
-        # Cti log dokud se nenajde RSD nebo se nezastavi
-        for _ in range(120):  # max 60s (120 * 0.5s)
-            if self._stop_event.is_set():
-                return
-            try:
-                with open(self.LOG_PATH, "r") as f:
-                    f.seek(read_pos)
-                    new_data = f.read()
-                    read_pos = f.tell()
-                if new_data:
-                    for line in new_data.splitlines():
-                        match = rsd_pattern.search(line)
-                        if match:
-                            addr = match.group(1)
-                            port = match.group(2)
-                            with self._lock:
-                                self._rsd_address = addr
-                                self._rsd_port = port
-                            self.on_status(
-                                f"Tunel pripraven: {addr}:{port}"
-                            )
-                            return
-            except Exception:
-                pass
-            time.sleep(0.5)
+        first_found = False
+        no_rsd_ticks = 0
 
-        self.on_status("Chyba: tunneld nenasel tunel do 60s")
+        while not self._stop_event.is_set():
+            addr, port = self._scan_log_for_latest_rsd()
+            if addr and port:
+                with self._lock:
+                    changed = (
+                        self._rsd_address != addr or self._rsd_port != port
+                    )
+                    self._rsd_address = addr
+                    self._rsd_port = port
+                if not first_found:
+                    first_found = True
+                    self.on_status(f"Tunel pripraven: {addr}:{port}")
+                elif changed:
+                    self.on_status(f"Novy tunel: {addr}:{port}")
+                no_rsd_ticks = 0
+            elif not first_found:
+                no_rsd_ticks += 1
+                # Po 60s bez RSD → vzdat se
+                if no_rsd_ticks >= 120:
+                    self.on_status("Chyba: tunneld nenasel tunel do 60s")
+                    return
+
+            time.sleep(0.5)
 
     def stop(self):
         self._stop_event.set()
@@ -605,6 +643,12 @@ class GPSSpoofApp(QMainWindow):
         self.device_label.setObjectName("deviceDisconnected")
         dev_layout.addWidget(self.device_label, 1)
 
+        refresh_tunnel_btn = QPushButton("Obnovit tunel")
+        refresh_tunnel_btn.setObjectName("secondary")
+        refresh_tunnel_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        refresh_tunnel_btn.clicked.connect(self._refresh_tunnel)
+        dev_layout.addWidget(refresh_tunnel_btn)
+
         refresh_btn = QPushButton("Obnovit")
         refresh_btn.setObjectName("secondary")
         refresh_btn.setCursor(Qt.CursorShape.PointingHandCursor)
@@ -745,6 +789,20 @@ class GPSSpoofApp(QMainWindow):
             self._detecting = True
         threading.Thread(target=self._detect_device, daemon=True).start()
 
+    def _refresh_tunnel(self):
+        """Rucni refresh RSD z logu (nacte nejnovejsi tunel)."""
+        def worker():
+            if self.tunneld.refresh_rsd():
+                addr, port = self.tunneld.get_rsd()
+                self.bridge.status_changed.emit(
+                    f"Aktualni tunel: {addr}:{port}"
+                )
+            else:
+                self.bridge.status_changed.emit(
+                    "Zadny tunel v logu — pockej az se vytvori"
+                )
+        threading.Thread(target=worker, daemon=True).start()
+
     def _detect_device(self):
         try:
             connected = DeviceDetector.is_device_connected()
@@ -775,6 +833,10 @@ class GPSSpoofApp(QMainWindow):
             self.gpx_entry.setText(path)
 
     def _ensure_simulator(self):
+        # Vzdy pred prikazem zkusit obnovit RSD z logu (tunel se mohl
+        # zmenit — novy iPhone, reconnect, atd.)
+        self.tunneld.refresh_rsd()
+
         if not self.tunneld.has_tunnel:
             self._update_status(
                 "Tunel neni pripraven. Cekejte nebo restartujte aplikaci."

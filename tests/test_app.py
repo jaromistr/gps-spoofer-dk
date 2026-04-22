@@ -170,97 +170,152 @@ class TestTunneldManager(unittest.TestCase):
         self.assertFalse(result)
         self.assertIn("Chyba", status_fn.call_args[0][0])
 
-    def test_read_log_parses_ipv4_rsd(self):
-        mgr, status_fn = self._make_manager()
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
-                                         delete=False) as f:
-            f.write("Some log line\n")
-            f.write("Created tunnel --rsd 10.0.0.1 12345\n")
-            mgr.LOG_PATH = f.name
-        try:
-            mgr._read_log_file()
-            self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "12345"))
-        finally:
-            os.unlink(f.name)
+    def _write_log(self, content):
+        """Helper: zapise content do doc. log souboru, vrati cestu."""
+        f = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".log", delete=False
+        )
+        f.write(content)
+        f.close()
+        return f.name
 
-    def test_read_log_parses_ipv6_rsd(self):
+    def test_scan_log_parses_ipv4_rsd(self):
         mgr, status_fn = self._make_manager()
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
-                                         delete=False) as f:
-            f.write("Created tunnel --rsd fd71:abcd:1234::1 54321\n")
-            mgr.LOG_PATH = f.name
+        mgr.LOG_PATH = self._write_log(
+            "Some log line\nCreated tunnel --rsd 10.0.0.1 12345\n"
+        )
         try:
-            mgr._read_log_file()
-            self.assertEqual(mgr.get_rsd(), ("fd71:abcd:1234::1", "54321"))
+            addr, port = mgr._scan_log_for_latest_rsd()
+            self.assertEqual((addr, port), ("10.0.0.1", "12345"))
         finally:
-            os.unlink(f.name)
+            os.unlink(mgr.LOG_PATH)
 
-    def test_read_log_parses_rsd_with_extra_text(self):
-        mgr, status_fn = self._make_manager()
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
-                                         delete=False) as f:
-            f.write("INFO: Created tunnel --rsd 192.168.1.1 8080 for XYZ\n")
-            mgr.LOG_PATH = f.name
-        try:
-            mgr._read_log_file()
-            self.assertEqual(mgr.get_rsd(), ("192.168.1.1", "8080"))
-        finally:
-            os.unlink(f.name)
-
-    def test_read_log_ignores_unrelated_lines(self):
+    def test_scan_log_parses_ipv6_rsd(self):
         mgr, _ = self._make_manager()
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
-                                         delete=False) as f:
-            f.write("Starting tunneld...\nWaiting for devices...\n")
-            mgr.LOG_PATH = f.name
+        mgr.LOG_PATH = self._write_log(
+            "Created tunnel --rsd fd71:abcd:1234::1 54321\n"
+        )
         try:
-            # Set stop event after a short time so it doesn't loop 60s
-            def stop_soon():
-                time.sleep(0.3)
-                mgr._stop_event.set()
-            threading.Thread(target=stop_soon, daemon=True).start()
-            mgr._read_log_file()
-            self.assertEqual(mgr.get_rsd(), (None, None))
+            addr, port = mgr._scan_log_for_latest_rsd()
+            self.assertEqual((addr, port), ("fd71:abcd:1234::1", "54321"))
         finally:
-            os.unlink(f.name)
+            os.unlink(mgr.LOG_PATH)
 
-    def test_read_log_calls_on_status_on_match(self):
+    def test_scan_log_parses_rsd_with_extra_text(self):
+        mgr, _ = self._make_manager()
+        mgr.LOG_PATH = self._write_log(
+            "INFO: Created tunnel --rsd 192.168.1.1 8080 for XYZ\n"
+        )
+        try:
+            addr, port = mgr._scan_log_for_latest_rsd()
+            self.assertEqual((addr, port), ("192.168.1.1", "8080"))
+        finally:
+            os.unlink(mgr.LOG_PATH)
+
+    def test_scan_log_ignores_unrelated_lines(self):
+        mgr, _ = self._make_manager()
+        mgr.LOG_PATH = self._write_log(
+            "Starting tunneld...\nWaiting for devices...\n"
+        )
+        try:
+            addr, port = mgr._scan_log_for_latest_rsd()
+            self.assertIsNone(addr)
+            self.assertIsNone(port)
+        finally:
+            os.unlink(mgr.LOG_PATH)
+
+    def test_scan_log_returns_latest_rsd(self):
+        """Pokud log obsahuje vice RSD zaznamu, vrati POSLEDNI."""
+        mgr, _ = self._make_manager()
+        mgr.LOG_PATH = self._write_log(
+            "Created tunnel --rsd 10.0.0.1 1111\n"
+            "Some middle log line\n"
+            "Created tunnel --rsd 10.0.0.2 2222\n"
+            "Created tunnel --rsd 10.0.0.3 3333\n"
+        )
+        try:
+            addr, port = mgr._scan_log_for_latest_rsd()
+            self.assertEqual((addr, port), ("10.0.0.3", "3333"))
+        finally:
+            os.unlink(mgr.LOG_PATH)
+
+    def test_scan_log_missing_file(self):
+        mgr, _ = self._make_manager()
+        mgr.LOG_PATH = "/tmp/nonexistent_tunneld_test_xyz.log"
+        addr, port = mgr._scan_log_for_latest_rsd()
+        self.assertIsNone(addr)
+        self.assertIsNone(port)
+
+    def test_refresh_rsd_updates_from_log(self):
+        """refresh_rsd() cte cerstve hodnoty z logu."""
         mgr, status_fn = self._make_manager()
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
-                                         delete=False) as f:
-            f.write("Created tunnel --rsd 10.0.0.1 9999\n")
-            mgr.LOG_PATH = f.name
+        mgr.LOG_PATH = self._write_log(
+            "Created tunnel --rsd 10.0.0.1 9999\n"
+        )
         try:
-            mgr._read_log_file()
-            status_fn.assert_called_with("Tunel pripraven: 10.0.0.1:9999")
+            ok = mgr.refresh_rsd()
+            self.assertTrue(ok)
+            self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "9999"))
+            status_fn.assert_called_with("RSD obnovena: 10.0.0.1:9999")
         finally:
-            os.unlink(f.name)
+            os.unlink(mgr.LOG_PATH)
 
-    def test_read_log_stops_on_stop_event(self):
+    def test_refresh_rsd_no_change_no_status(self):
+        """Pokud se RSD nezmenila, neposila se duplicitni status."""
+        mgr, status_fn = self._make_manager()
+        mgr.LOG_PATH = self._write_log(
+            "Created tunnel --rsd 10.0.0.1 9999\n"
+        )
+        try:
+            mgr.refresh_rsd()  # First call sets RSD
+            status_fn.reset_mock()
+            mgr.refresh_rsd()  # Second call - same RSD
+            status_fn.assert_not_called()
+        finally:
+            os.unlink(mgr.LOG_PATH)
+
+    def test_refresh_rsd_empty_log(self):
+        mgr, _ = self._make_manager()
+        mgr.LOG_PATH = "/tmp/nonexistent_refresh_test.log"
+        self.assertFalse(mgr.refresh_rsd())
+
+    def test_read_log_file_finds_rsd_and_can_be_stopped(self):
+        """_read_log_file najde RSD v logu, pak lze zastavit stop_eventem."""
+        mgr, status_fn = self._make_manager()
+        mgr.LOG_PATH = self._write_log(
+            "Created tunnel --rsd 10.0.0.1 12345\n"
+        )
+        try:
+            # Run in thread, stop after short delay
+            t = threading.Thread(target=mgr._read_log_file, daemon=True)
+            t.start()
+            time.sleep(1.0)  # Give it time to read
+            mgr._stop_event.set()
+            t.join(timeout=3)
+            self.assertFalse(t.is_alive())
+            self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "12345"))
+            # Check status was reported
+            calls = [c[0][0] for c in status_fn.call_args_list]
+            self.assertTrue(
+                any("Tunel pripraven" in c for c in calls)
+            )
+        finally:
+            os.unlink(mgr.LOG_PATH)
+
+    def test_read_log_file_stops_on_stop_event(self):
+        """Kdyz je stop_event nastaveny, loop se hned ukonci."""
         mgr, _ = self._make_manager()
         mgr._stop_event.set()
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
-                                         delete=False) as f:
-            f.write("Created tunnel --rsd 10.0.0.1 9999\n")
-            mgr.LOG_PATH = f.name
+        mgr.LOG_PATH = self._write_log(
+            "Created tunnel --rsd 10.0.0.1 9999\n"
+        )
         try:
-            mgr._read_log_file()
-            self.assertEqual(mgr.get_rsd(), (None, None))
+            t = threading.Thread(target=mgr._read_log_file, daemon=True)
+            t.start()
+            t.join(timeout=3)
+            self.assertFalse(t.is_alive())
         finally:
-            os.unlink(f.name)
-
-    def test_read_log_missing_file_reports_error(self):
-        """If log file never appears, reports error."""
-        mgr, status_fn = self._make_manager()
-        mgr.LOG_PATH = "/tmp/nonexistent_tunneld_test.log"
-        # Set stop event quickly so test doesn't wait 30s
-        def stop_soon():
-            time.sleep(0.3)
-            mgr._stop_event.set()
-        threading.Thread(target=stop_soon, daemon=True).start()
-        mgr._read_log_file()
-        # Should not have found RSD
-        self.assertEqual(mgr.get_rsd(), (None, None))
+            os.unlink(mgr.LOG_PATH)
 
     @patch("app.subprocess.run")
     def test_stop_terminates_process(self, mock_run):
@@ -1320,8 +1375,8 @@ class TestEdgeCases(unittest.TestCase):
             f.write("Created tunnel --rsd 10.0.0.1 99999\n")
             mgr.LOG_PATH = f.name
         try:
-            mgr._read_log_file()
-            self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "99999"))
+            addr, port = mgr._scan_log_for_latest_rsd()
+            self.assertEqual((addr, port), ("10.0.0.1", "99999"))
         finally:
             os.unlink(f.name)
 
@@ -1333,8 +1388,8 @@ class TestEdgeCases(unittest.TestCase):
             f.write("Created tunnel --rsd 10.0.0.1 0\n")
             mgr.LOG_PATH = f.name
         try:
-            mgr._read_log_file()
-            self.assertEqual(mgr.get_rsd(), ("10.0.0.1", "0"))
+            addr, port = mgr._scan_log_for_latest_rsd()
+            self.assertEqual((addr, port), ("10.0.0.1", "0"))
         finally:
             os.unlink(f.name)
 
@@ -1373,19 +1428,16 @@ class TestEdgeCases(unittest.TestCase):
         self.assertIs(self.window.simulator, sim_ref)
 
     def test_empty_tunneld_output(self):
-        """Tunneld producing empty log leaves RSD as None."""
+        """Prazdny log -> zadna RSD."""
         mgr = gps_app.TunneldManager()
         with tempfile.NamedTemporaryFile(mode="w", suffix=".log",
                                          delete=False) as f:
             f.write("")  # empty
             mgr.LOG_PATH = f.name
         try:
-            def stop_soon():
-                time.sleep(0.3)
-                mgr._stop_event.set()
-            threading.Thread(target=stop_soon, daemon=True).start()
-            mgr._read_log_file()
-            self.assertEqual(mgr.get_rsd(), (None, None))
+            addr, port = mgr._scan_log_for_latest_rsd()
+            self.assertIsNone(addr)
+            self.assertIsNone(port)
         finally:
             os.unlink(f.name)
 
